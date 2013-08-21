@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html ng-app="google-maps-demo" lang="en">
+
+<head>
+	<meta charset="UTF-8"> 
+		
+	<meta name="keywords" content="angular.js,google maps,javascript,plugin">
+	<meta name="description" content="Add Google Maps support to your Angular.js application">
+	<meta name="google-site-verification" content="QFEOB2Fyq66-Wrfr98ihD_A6eGryMzQPXV9fSSVpRZA">
+	
+	<title>nlaplante/angular-google-maps &mdash; Google Maps for Angular.js</title>
+	
+	<link rel="stylesheet" type="text/css" href="css/prettify.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/angular-google-maps.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-34163232-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
+
+</head>
+
+<body ng-controller="DemoController" ng-cloak>
+	
+	<div class="container">
+
+	<!--	You can use either a div having class 'google-map' or the '<google-map>' element; in 
+			the latter case, uncomment the style above to make sure the custom elements gets block display	-->
+			
+<!-- 	<div class="google-map" 
+		center="position.coords"
+		zoom="zoomProperty" 
+		markers="markersProperty"
+		latitude="clickedLatitudeProperty"
+		longitude="clickedLongitudeProperty"
+		mark-click="true"
+		draggable="true"
+		fit="false"
+		events="eventsProperty"
+		style="height: 1000px; width: 100%">
+	</div> -->
+
+
+	<h2 id="demo">Try it</h2>
+	
+	<div class="row-fluid">
+		<form class="form-horizontal" name="angularGoogleMapsForm" novalidate>
+			<div class="span5">				
+				<fieldset>						
+					
+					<p>The coordinates and zoom level are adjusted automatically as you wiggle the map around:</p>
+					
+					<legend>Coordinates:</legend>
+					<div class="control-group">
+						<label class="control-label">Latitude:</label>
+						<div class="controls">
+							<input type="number" ng-model="center.latitude">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label">Longitude:</label>
+						<div class="controls">
+							<input type="number" ng-model="center.longitude">
+						</div>
+					</div>
+					
+					<div class="control-group" ng-hidden="!geolocationAvailable">
+						<label></label>
+						<div class="controls">
+							<a class="btn" ng-click="findMe()">
+								<i class="icon-screenshot"></i>
+								Find me
+							</a>
+						</div>
+					</div>
+					
+					<div class="control-group" ng-hide="!latitude || !longitude">
+						<label class="control-label">Clicked marker position:</label>
+						<div class="controls">
+							{{ latitude }}, {{ longitude }}
+						</div>
+					</div>						
+					
+					<div class="control-group">
+						<label class="control-label">Zoom level:</label>
+						<div class="controls">
+							<input type="number" ng-model="zoom" class="input-mini">
+						</div>
+					</div>
+				</fieldset>
+				
+				<fieldset>
+				<legend><ng-pluralize count="markers.length" when="{'0': 'Add a marker', '1': '1 marker', 'other': '{} markers'}"></legend>
+				
+				<p>Add new markers on the map by entering their coordinates in the fields below:</p>
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Latitude</th>
+							<th>Longitude</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="marker in markers">
+							<td>{{ marker.latitude }}</td>
+							<td>{{ marker.longitude }}</td>
+							<td></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td><input type="number" class="input-small" ng-model="markerLat" name="markerLat" required></td>
+							<td><input type="number" class="input-small" ng-model="markerLng" name="markerLng" required></td>
+							<td><button class="btn" ng-click="addMarker()" 
+								ng-disabled="angularGoogleMapsForm.markerLat.$invalid || angularGoogleMapsForm.markerLng.$invalid">Add <i class="icon icon-plus-sign"></i></button></td>
+						</tr>
+					</tfoot>
+				</table>
+			</fieldset>
+			
+		</div>
+		
+		<div class="span7">
+				<google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="true" fit="false"
+					latitude="latitude" longitude="longitude" refresh="activeTab == 'demo'" class="angular-google-map"></google-map>
+		</div>
+		</form>
+	</div>
+		
+</div>
+
+</div>
+	<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?language=en&sensor=false"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/prettify.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+	<script type="text/javascript" src="//code.angularjs.org/1.0.4/angular-bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/angular-google-maps.js"></script>
+	<script type="text/javascript" src="js/demo-controller.js"></script>
+
+</body>
+
+</html>
