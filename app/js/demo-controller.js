@@ -61,8 +61,8 @@
 		
 		$scope.markers = [];
 		
-		$scope.markerLat = null;
-		$scope.markerLng = null;
+		$scope.markerLat = 20;// null;
+		$scope.markerLng = -156; //null;
 		
 		$scope.addMarker = function () {
 			$scope.markers.push({
