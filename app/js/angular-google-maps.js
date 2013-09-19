@@ -187,12 +187,40 @@
           return;
         }
         
+        /*  try http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.0.1/docs/examples.html
+          labelContent: "A",
+          labelAnchor: new google.maps.Point(3, 30),
+          labelClass: "labels", // the CSS class for the label
+          labelInBackground: false
+        */
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(lat, lng),
           map: _instance,
-          icon: icon
+          icon: icon, 
+          draggable: true
         });
         
+        google.maps.event.addListener(marker, "dragstart",         
+              function () {
+                //that.dragging = true;
+              }
+          );
+          
+          google.maps.event.addListener(marker, "dragend",
+              function () {
+                marker.latitude = marker.getPosition().pb;
+                console.log (marker.getPosition().pb);
+                that.center.latitude = marker.getPosition().pb;
+                console.log (marker.getPosition().qb);
+              }
+          );
+          
+          google.maps.event.addListener(marker, "drag",
+              function () {
+                //that.dragging = true;   
+              }
+          );  
+
         if (label) {
           
         }
@@ -222,7 +250,7 @@
         that.markers.unshift({
           "lat": lat,
           "lng": lng,
-          "draggable": false,
+          "draggable": true, // DJH 9/10/2013
           "icon": icon,
           "infoWindowContent": infoWindowContent,
           "label": label,

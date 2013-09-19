@@ -114,13 +114,15 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr ng-repeat="marker in markers">
-							<td>{{ marker.latitude }}</td>
-							<td>{{ marker.longitude }}</td>
-							<td></td>
-						</tr>
-					</tbody>
+				
+						<div ng-repeat="marker in markers">
+							<div>
+								 Marker: {{$index}}
+								 Latitude:<input type="number" class="input-small" ng-model="markers[$index].latitude"> 		
+								 Longitude:<input type="number" class="input-small" ng-model="markers[$index].longitude"> 
+            				</div>                        
+						<div>
+					
 					<tfoot>
 						<tr>
 							<td><input type="number" class="input-small" ng-model="markerLat" name="markerLat" required></td>
