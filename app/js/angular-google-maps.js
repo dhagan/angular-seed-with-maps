@@ -131,6 +131,55 @@
                 that.center = _instance.getCenter();
               }
           );
+
+          /**
+          * DJH
+          * http://gmaps-utility-gis.googlecode.com/svn/trunk/v3test/mvc/poly_bind.html
+          */
+    /*      function MVCArrayBinder(mvcArray){
+            this.array_ = mvcArray;
+          }
+          MVCArrayBinder.prototype = new google.maps.MVCObject();
+          MVCArrayBinder.prototype.get = function(key) {
+            if (!isNaN(parseInt(key))){
+              return this.array_.getAt(parseInt(key));
+            } else {
+              this.array_.get(key);
+            }
+          }
+          MVCArrayBinder.prototype.set = function(key, val) {
+            if (!isNaN(parseInt(key))){
+              this.array_.setAt(parseInt(key), val);
+            } else {
+              this.array_.set(key, val);
+            }
+          }*/
+/*         var polyOptions = {
+            strokeColor: '#000000',
+            strokeOpacity: 1.0,
+            strokeWeight: 3, 
+            map: _instance
+          }
+          var poly = new google.maps.Polyline(polyOptions);
+          //poly.binder = new MVCArrayBinder(poly.getPath());
+     
+          google.maps.event.addListener(_instance, "click",
+              
+              function () {
+                  var path = poly.getPath();
+                  path.push(event.latLng);
+                  var len = path.getLength();
+                  var marker = new google.maps.Marker({
+                    position: event.latLng,
+                    title: '#' + len,
+                    map: _instance,
+                    draggable : true
+                  });
+                  //marker.bindTo('position', poly.binder, (len-1).toString());
+                  // DJH TODO
+                //_m.addMarker(v.latitude, v.longitude, v.icon, v.infoWindow);
+              }
+          );    */      
           
           // Attach additional event listeners if needed
           if (_handlers.length) {
@@ -180,6 +229,10 @@
         });
       };
       
+      /***************************************************************************
+      addMarker()
+      ***************************************************************************/
+      
       this.addMarker = function (lat, lng, icon, infoWindowContent, label, url,
           thumbnail) {
         
@@ -197,7 +250,9 @@
           position: new google.maps.LatLng(lat, lng),
           map: _instance,
           icon: icon, 
-          draggable: true
+          draggable: true, 
+          label: 'adhfa',
+          title: 'my title'
         });
         
         google.maps.event.addListener(marker, "dragstart",         
