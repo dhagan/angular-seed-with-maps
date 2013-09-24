@@ -13,6 +13,8 @@
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
     <script>
   /*
    * Use bindTo to allow dynamic drag of markers to refresh poly.
@@ -80,10 +82,67 @@
     marker.bindTo('position', poly.binder, (len-1).toString());
   }
 google.maps.event.addDomListener(window, 'load', initialize);
-
     </script>
+
+    <script>
+$(function(view) {
+"use strict";
+
+var GPX_GPX_OPEN = "<gpx version=\"1.0\" creator=\"Velocitek - http://www.velocitek.com\" d1p1:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\" xmlns:d1p1=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.topografix.com/GPX/1/0\">\n";
+var GPX_GPX_CLOSE = "</gpx>\n";
+var GPX_TRK_OPEN = "<trk>";
+var GPX_TRK_CLOSE = "</trk>\n";
+var GPX_TRKSEG_OPEN = "<trkseg>";
+var GPX_TRKSEG_CLOSE = "</trkseg>\n";
+var GPX_TRKPT_OPEN = "<trkpt";
+var GPX_TRKPT_CLOSE = "</trkpt>\n";
+var GPX_TIME_OPEN = "<time>\n";
+var GPX_TIME_CLOSE = "</time>\n";
+
+
+function getGPX() {
+	var gpx = GPX_GPX_OPEN;
+	gpx += GPX_GPX_CLOSE;
+	return gpx;
+}
+
+// The canvas drawing portion of the demo is based off the demo at
+// http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
+$( "#text-options" ).submit(function( event ) {
+  //alert( "Handler for .submit() called." );
+  event.preventDefault();
+  var blob = new Blob([getGPX()], {type: "text/plain;charset=utf-8"});
+ 	saveAs(blob, "waypt.gpx");
+});
+
+// text_options_form.addEventListener("submit", function(event) {
+// 	event.preventDefault();
+// 	var BB = get_blob();
+// 	saveAs(
+// 		  new BB(
+// 			  [text.value || text.placeholder]
+// 			, {type: "text/plain;charset=" + document.characterSet}
+// 		)
+// 		, (text_filename.value || text_filename.placeholder) + ".txt"
+// 	);
+// 	var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+// 	saveAs(blob, "hello world.txt");
+
+// }, false);
+
+});
+    </script>
+
   </head>
   <body>
     <div id="map-canvas"></div>
+	  <section xmlns="http://www.w3.org/1999/xhtml" id="text-demo">
+	<h2>Save GPX</h2>
+	<textarea class="input" id="text" placeholder="Once upon a time..."></textarea>
+	<form id="text-options">
+		<label>Filename: <input type="text" class="filename" id="text-filename" placeholder="a plain document" />.txt</label>
+		<input type="submit" value="Save" />
+	</form>
+	</section>
   </body>
 </html>
