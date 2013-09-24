@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/FileSaver.js"></script>
     <script>
+    var markers = new Array();
   /*
    * Use bindTo to allow dynamic drag of markers to refresh poly.
    */
@@ -79,8 +80,11 @@
       map: map,
       draggable : true
     });
+    markers.push(marker);
     marker.bindTo('position', poly.binder, (len-1).toString());
   }
+
+
 google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 
@@ -94,25 +98,35 @@ var GPX_TRK_OPEN = "<trk>";
 var GPX_TRK_CLOSE = "</trk>\n";
 var GPX_TRKSEG_OPEN = "<trkseg>";
 var GPX_TRKSEG_CLOSE = "</trkseg>\n";
-var GPX_TRKPT_OPEN = "<trkpt";
-var GPX_TRKPT_CLOSE = "</trkpt>\n";
+var GPX_WPT_OPEN = "<wpt";
+var GPX_WPT_CLOSE = "</wpt>\n";
 var GPX_TIME_OPEN = "<time>\n";
 var GPX_TIME_CLOSE = "</time>\n";
 
 
 function getGPX() {
 	var gpx = GPX_GPX_OPEN;
+	for (var i = 0; i < markers.length; i++) {
+		gpx += GPX_WPT_OPEN;
+		var position = markers[i].getPosition();
+		gpx += "lat=\"" + position.lat()  + "\" lon=\"" + position.lng() + "\">";
+		gpx += GPX_WPT_CLOSE
+	};
 	gpx += GPX_GPX_CLOSE;
+
 	return gpx;
 }
 
 // The canvas drawing portion of the demo is based off the demo at
 // http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
 $( "#text-options" ).submit(function( event ) {
-  //alert( "Handler for .submit() called." );
-  event.preventDefault();
-  var blob = new Blob([getGPX()], {type: "text/plain;charset=utf-8"});
- 	saveAs(blob, "waypt.gpx");
+  	event.preventDefault();
+	  if ( markers.length == 0) {
+	  	alert( "Please click to add markers" );
+	  } else {
+	  var blob = new Blob([getGPX()], {type: "text/plain;charset=utf-8"});
+	 	saveAs(blob, "waypt.gpx");
+	 }
 });
 
 // text_options_form.addEventListener("submit", function(event) {
@@ -137,10 +151,8 @@ $( "#text-options" ).submit(function( event ) {
   <body>
     <div id="map-canvas"></div>
 	  <section xmlns="http://www.w3.org/1999/xhtml" id="text-demo">
-	<h2>Save GPX</h2>
-	<textarea class="input" id="text" placeholder="Once upon a time..."></textarea>
+	<h3>Save gpx</h3>
 	<form id="text-options">
-		<label>Filename: <input type="text" class="filename" id="text-filename" placeholder="a plain document" />.txt</label>
 		<input type="submit" value="Save" />
 	</form>
 	</section>
