@@ -5,15 +5,21 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
-      html, body, #map-canvas {
-        margin: 0;
-        padding: 0;
-        width:  480px;
-        height: 320px;
+      html, body
+      {
+   		margin-left: 100px;
       }
+
+      #map-canvas {
+        width:  640px;
+        height: 480px;
+      }
+
+
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/FileSaver.js"></script>
     <script>
   var markers = new Array();
@@ -43,8 +49,11 @@
   
   var poly;
   var map;
+  var initialLocation;
+  var browserSupportFlag =  new Boolean();
+
   function initialize() {
-    var chicago = new google.maps.LatLng(20, -156);
+    var chicago = new google.maps.LatLng(30, -156);
     var myOptions = {
       zoom: 7,
       center: chicago,
@@ -54,7 +63,7 @@
     map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
 
     var polyOptions = {
-      strokeColor: '#000000',
+      strokeColor: '#FF0000',
       strokeOpacity: 1.0,
       strokeWeight: 3, map: map
     }
@@ -82,6 +91,34 @@
     });
     markers.push(marker);
     marker.bindTo('position', poly.binder, (len-1).toString());
+  }
+
+function findMe() {
+  if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      map.setCenter(initialLocation);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+}
+  
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+      initialLocation = newyork;
+    } else {
+      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+      initialLocation = siberia;
+    }
+    map.setCenter(initialLocation);
   }
 
 
@@ -149,20 +186,31 @@ $( "#text-options" ).submit(function( event ) {
 
   </head>
   <body>
-    <div id="map-canvas"></div>
-	  <section xmlns="http://www.w3.org/1999/xhtml" id="text-demo">
-	<h3>Save gpx</h3>
-	<form id="text-options">
-		<input type="submit" value="Save" />
-	</form>
-	<p>
-disable save button until a waypoint has been entered
-delete waypoint?
-‘titles’ on waypoints
-info window so waypoints can be named
-validate gpx
-“here” button to center map
-</p>
-	</section>
+  	
+  		<h4>Create Waypoints GPX</h4>
+	  	<p>Click to create waypoints and create a route.  Drag waypoint markers to adjust.</p>
+	 
+	    <div id="map-canvas"></div>
+
+		<div>
+			<br>
+			<br>
+			<input type="button" value="Find Me" onClick="findMe();"/>
+		
+			
+			<h4>Save GPX</h4>
+			<form id="text-options">
+				<input type="submit" value="Save" />
+			</form>
+			<p>
+			disable save button until a waypoint has been entered <br>
+			disable findMe() if navigator not available<br>
+			delete waypoint? <br>
+			‘titles’ other than #N on waypoints <br>
+			info window so waypoints can be named <br>
+			validate gpx <br>
+			“here” button to center map <br>
+			</p>
+		</div>
   </body>
 </html>
