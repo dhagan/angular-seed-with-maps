@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/FileSaver.js"></script>
 <!-- Load the Paper.js library -->
@@ -25,11 +28,30 @@
 </script>
 
 <!-- Define inlined PaperScript associate it with myCanvas -->
-<script type="text/paperscript" src="js/paperHello.js" canvas="myCanvas">
+<script type="text/paperscript" src="js/animateHello.js" canvas="myCanvas"></script>
+
+<script>
+
+$(function() {  
+  $( "#sliderOpacity" ).slider({
+      value:0.35,
+      step: 0.01,
+      min:0,
+      max:1,
+      slide: function( event, ui ) {
+            },
+      stop: function( event, ui ) {
+            }
+    }).attr("title", "Opacity Control");
+ // $('.ui-slider-handle').height(50);
+});
+
 </script>
+
 </head>
 <body>
 	<div id="map-canvas" style="width:640px; height:480px"></div>
 	<canvas id="myCanvas" style="position:absolute;top:0;left:0" width="640px" height="480px"></canvas>
+  <div id="sliderOpacity"></div>
 </body>
 </html>

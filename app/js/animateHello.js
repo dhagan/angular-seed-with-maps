@@ -1,3 +1,65 @@
+
+	// Create a Paper.js Path to draw a line into it:
+	var path = new Path();
+	// Give the stroke a color
+	path.strokeColor = 'black';
+	var start = new Point(100, 100);
+	// Move to start and draw a line from there
+	path.moveTo(start);
+	// Note the plus operator on Point objects.
+	// PaperScript does that for us, and much more!
+	path.lineTo(start + [ 100, -50 ]);
+
+
+var path;
+
+var textItem = new PointText({
+	content: 'Click and drag to draw a line.',
+	point: new Point(120, 130),
+	fillColor: 'black',
+});
+
+function onMouseDown(event) {
+	// If we produced a path before, deselect it:
+	if (path) {
+		path.selected = false;
+	}
+
+	// Create a new path and set its stroke color to black:
+	path = new Path({
+		segments: [event.point],
+		strokeColor: 'black',
+		// Select the path, so we can see its segment points:
+		fullySelected: true
+	});
+}
+
+// While the user drags the mouse, points are added to the path
+// at the position of the mouse:
+function onMouseDrag(event) {
+	path.add(event.point);
+
+	// Update the content of the text item to show how many
+	// segments it has:
+	textItem.content = 'Segment count: ' + path.segments.length;
+}
+
+// When the mouse is released, we simplify the path:
+function onMouseUp(event) {
+	var segmentCount = path.segments.length;
+
+	// When the mouse is released, simplify it:
+	path.simplify(10);
+
+	// Select the path, so we can see its segments:
+	path.fullySelected = true;
+
+	var newSegmentCount = path.segments.length;
+	var difference = segmentCount - newSegmentCount;
+	var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
+	textItem.content = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
+}
+
 var maxWidth = 640; //900;
 var maxHeight = 480; // 700;
 var maxPoint = new Point(maxWidth,maxHeight);
@@ -51,6 +113,50 @@ function latLngToPoint(latLng)
 	return point;
 }
 
+function calcRoute()
+{
+/*	var start = startLatLng;
+	var end = endLatLng;
+	var request = {
+		origin:start,
+		destination:end,
+		travelMode: google.maps.TravelMode.DRIVING
+	};
+	dirService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			var dirPath = new Path();
+			for (i=0;i<result.routes[0].overview_path.length;i++)
+			{
+				var point = latLngToPoint(result.routes[0].overview_path[i]);
+				dirPath.add(point);
+				
+				var hitRes = gridGroup.hitTest(point, {segments: true, fill: true, stroke: true, tolerance:3});
+			
+				if (hitRes)
+				{	
+					var color = new Color('red');
+					color.alpha = gridRaster.getPixel(point/(maxWidth,maxHeight)*(87,68)).alpha + 0.05;
+					//alert(gridRaster.getPixel(point/(maxWidth,maxHeight)*(87,68)).gray);
+					gridRaster.setPixel(point/(maxWidth,maxHeight)*(87,68), color);
+				}
+			}
+			travelPaths.push(dirPath);
+			travelPaths[0].strokeColor = 'red';
+			travelPaths[0].strokeWidth = 1;
+			travelPaths[0].fullySelected = true;
+			if (travelPaths.length > 1)
+			{
+				travelPaths[0].remove();
+				travelPaths.shift();
+				travelPaths[0].strokeColor = 'red';
+				travelPaths[0].strokeWidth = 1;
+				travelPaths[0].fullySelected = true;
+			}
+		}
+	});*/
+}
+
+
 google.maps.event.addListener(map, 'tilesloaded', function() 
 {
 	startLatLng = pointToLatLng(currentPoint.position);
@@ -81,6 +187,24 @@ function onFrame(event)
 			randLine.firstSegment.point = currentPoint.position;
 			randLine.opacity = 1;
 		}
-	}
-	
+	}	
 }
+
+
+
+
+
+$(function() {  
+  $( "#sliderOpacity" ).slider({
+      value:0.35,
+      step: 0.01,
+      min:0,
+      max:1,
+      slide: function( event, ui ) {
+      		textItem.content = 'ui.value: ' + ui.value;
+            },
+      stop: function( event, ui ) {
+            }
+    }).attr("title", "Opacity Control");
+ // $('.ui-slider-handle').height(50);
+});
