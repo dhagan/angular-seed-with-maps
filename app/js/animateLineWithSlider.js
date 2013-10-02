@@ -1,16 +1,4 @@
 
-	// Create a Paper.js Path to draw a line into it:
-	var path = new Path();
-	// Give the stroke a color
-	path.strokeColor = 'black';
-	var start = new Point(100, 100);
-	// Move to start and draw a line from there
-	path.moveTo(start);
-	// Note the plus operator on Point objects.
-	// PaperScript does that for us, and much more!
-	path.lineTo(start + [ 100, -50 ]);
-
-
 var path;
 
 var textItem = new PointText({
@@ -60,6 +48,8 @@ function onMouseUp(event) {
 	textItem.content = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
 }
 
+
+
 var maxWidth = 640; //900;
 var maxHeight = 480; // 700;
 var maxPoint = new Point(maxWidth,maxHeight);
@@ -77,7 +67,7 @@ var destPoint = maxPoint * Point.random();
 
 function pointToLatLng(point)
 {
-	var proj = map.getProjection();
+/*	var proj = map.getProjection();
 	var bounds = map.getBounds();
 	var ne = bounds.getNorthEast();
 	var sw = bounds.getSouthWest();
@@ -89,12 +79,12 @@ function pointToLatLng(point)
 	var curWorldY = curPixelY + neWorldXY.y;
 	var curWorldPoint = new google.maps.Point(curWorldX,curWorldY);
 	var curLatLng = proj.fromPointToLatLng(curWorldPoint);
-	return curLatLng;
+	return curLatLng;*/
 }
 
 function latLngToPoint(latLng)
 {
-	var proj = map.getProjection();
+/*	var proj = map.getProjection();
 	var calWorldPoint = proj.fromLatLngToPoint(latLng);
 	var calPixelPointx = calWorldPoint.x * Math.pow(2,map.getZoom());
 	var calPixelPointy = calWorldPoint.y * Math.pow(2,map.getZoom());
@@ -110,7 +100,7 @@ function latLngToPoint(latLng)
 	var screenPixelX = calPixelPointx - wPixelPoint;
 	var screenPixelY = calPixelPointy - nPixelPoint;
 	var point = new Point(screenPixelX, screenPixelY);
-	return point;
+	return point;*/
 }
 
 function calcRoute()
@@ -192,24 +182,39 @@ function onFrame(event)
 
 }
 
+function corners() {
+	var myCircle = new Path.Circle(new Point(0, 0), 50);
+	 myCircle.fillColor = 'black';
+	 myCircle = new Path.Circle(new Point(0, maxHeight), 50);
+	  myCircle.fillColor = 'black';
+	 myCircle = new Path.Circle(new Point(maxWidth, 0), 50);
+	  myCircle.fillColor = 'black';
+	 myCircle = new Path.Circle(new Point(maxWidth, maxHeight), 50);
+	 myCircle.fillColor = 'black';
+}
 
+corners();
 
 var y = -50;
+var uiValue = 0;
 
 $(function() {  
   $( "#sliderOpacity" ).slider({
-      value:0.35,
-      step: 0.01,
+      value:0.0,
+      step: 1.0,
       min:0,
-      max:1,
+      max:100,
       slide: function( event, ui ) {
       		textItem.content = 'ui.value: ' + ui.value;
       		console.log(ui.value  , y);
+      		uiValue = ui.value;
       		//currentPoint.moveTo(new Point( 100, 100 + (10*ui.value)));
       		//new Path.Star(maxPoint * Point.random(),5,10,3);
       		y = y + ui.value;
       		//path.lineTo(start + [ 100, -50 + (10*ui.value)]);
-           path.lineTo(start + [ 100, y]);
+           //path.lineTo(start + [ 100, y]);
+           currentPoint.position.x += ui.value * 10;
+			randLine.lastSegment.point = currentPoint.position;
             },
       stop: function( event, ui ) {
             }
