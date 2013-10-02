@@ -8,3 +8,17 @@
 	// Note the plus operator on Point objects.
 	// PaperScript does that for us, and much more!
 	path.lineTo(start + [ 100, -50 ]);
+
+
+	 function initialize() {
+    var chicago = new google.maps.LatLng(20, -156);
+    var myOptions = {
+      zoom: 7,
+      center: chicago,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+}
+
+  google.maps.event.addDomListener(window, 'load', initialize);
