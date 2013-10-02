@@ -3,7 +3,7 @@ var path;
 
 var textItem = new PointText({
 	content: 'Click and drag to draw a line.',
-	point: new Point(120, 130),
+	point: new Point(500, 440),
 	fillColor: 'black',
 });
 
@@ -67,7 +67,7 @@ var destPoint = maxPoint * Point.random();
 
 function pointToLatLng(point)
 {
-/*	var proj = map.getProjection();
+	var proj = map.getProjection();
 	var bounds = map.getBounds();
 	var ne = bounds.getNorthEast();
 	var sw = bounds.getSouthWest();
@@ -79,12 +79,12 @@ function pointToLatLng(point)
 	var curWorldY = curPixelY + neWorldXY.y;
 	var curWorldPoint = new google.maps.Point(curWorldX,curWorldY);
 	var curLatLng = proj.fromPointToLatLng(curWorldPoint);
-	return curLatLng;*/
+	return curLatLng;
 }
 
 function latLngToPoint(latLng)
 {
-/*	var proj = map.getProjection();
+	var proj = map.getProjection();
 	var calWorldPoint = proj.fromLatLngToPoint(latLng);
 	var calPixelPointx = calWorldPoint.x * Math.pow(2,map.getZoom());
 	var calPixelPointy = calWorldPoint.y * Math.pow(2,map.getZoom());
@@ -100,12 +100,12 @@ function latLngToPoint(latLng)
 	var screenPixelX = calPixelPointx - wPixelPoint;
 	var screenPixelY = calPixelPointy - nPixelPoint;
 	var point = new Point(screenPixelX, screenPixelY);
-	return point;*/
+	return point;
 }
 
 function calcRoute()
 {
-/*	var start = startLatLng;
+	var start = startLatLng;
 	var end = endLatLng;
 	var request = {
 		origin:start,
@@ -143,19 +143,19 @@ function calcRoute()
 				travelPaths[0].fullySelected = true;
 			}
 		}
-	});*/
+	});
 }
 
 
-/*google.maps.event.addListener(map, 'tilesloaded', function() 
+google.maps.event.addListener(map, 'tilesloaded', function() 
 {
 	startLatLng = pointToLatLng(currentPoint.position);
 });
-*/
+
 
 function onFrame(event)
 {
-/*	
+
 	var vector = destPoint - currentPoint.position;	
 	currentPoint.position += vector/10;
 	
@@ -178,18 +178,19 @@ function onFrame(event)
 			randLine.firstSegment.point = currentPoint.position;
 			randLine.opacity = 1;
 		}
-	}	*/
+	}	
 
 }
 
 function corners() {
-	var myCircle = new Path.Circle(new Point(0, 0), 50);
+	var radius = 5;
+	var myCircle = new Path.Circle(new Point(0, 0), radius);
 	 myCircle.fillColor = 'black';
-	 myCircle = new Path.Circle(new Point(0, maxHeight), 50);
+	 myCircle = new Path.Circle(new Point(0, maxHeight), radius);
 	  myCircle.fillColor = 'black';
-	 myCircle = new Path.Circle(new Point(maxWidth, 0), 50);
+	 myCircle = new Path.Circle(new Point(maxWidth, 0), radius);
 	  myCircle.fillColor = 'black';
-	 myCircle = new Path.Circle(new Point(maxWidth, maxHeight), 50);
+	 myCircle = new Path.Circle(new Point(maxWidth, maxHeight), radius);
 	 myCircle.fillColor = 'black';
 }
 

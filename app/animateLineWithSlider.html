@@ -10,11 +10,11 @@
 <script type="text/javascript" src="js/paper.js"></script>
 
 <script>
-/*  function initialize() {
-    var chicago = new google.maps.LatLng(20, -156);
+  function initialize() {
+    var maui = new google.maps.LatLng(20, -156);
     var myOptions = {
       zoom: 7,
-      center: chicago,
+      center: maui,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -22,7 +22,7 @@
 }
 
   google.maps.event.addDomListener(window, 'load', initialize);
-*/
+
 </script>
 
 <!-- Define inlined PaperScript associate it with myCanvas -->
@@ -31,12 +31,12 @@
 <script>
 
 
-
 </script>
 
 </head>
 <body>
-	<canvas id="myCanvas" width="640px" height="480px"></canvas>
-  <div id="sliderOpacity"></div>
+  <div id="map-canvas" style="position:absolute;top:0;left:0;width:640px;height:480px"></div>
+  <canvas id="myCanvas" style="position:absolute;top:0;left:0;width:640px;height:480px"></canvas>
+  <div id="sliderOpacity" style="position:relative;top:440px;left:0px;width:630px"></div>
 </body>
 </html>
