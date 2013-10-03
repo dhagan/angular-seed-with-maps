@@ -13,7 +13,12 @@ var track = [
 [1.0, 2.1], 
 [1.0, 3.1], 
 [1.0, 4.1], 
-[1.0, 5.1] 
+[1.0, 5.1],
+[1.0, 6.1], 
+[1.0, 7.1], 
+[1.0, 8.1], 
+[1.0, 0.1], 
+[1.0, 10.1] 
 ];
 
 
@@ -164,9 +169,32 @@ google.maps.event.addListener(map, 'tilesloaded', function()
 });
 
 
+var seconds = 0;
+var index = 0;
+function tick() {
+	currentPoint.position.x = 100 + (track[index++][1]*10);
+	if (index >= 9) {
+		index = 0;
+	}
+}
+
 function onFrame(event)
 {
 
+	// the number of times the frame event was fired:
+	//console.log(event.count);
+
+	// The total amount of time passed since
+	// the first frame event in seconds:
+	//console.log(event.time);
+
+	if ( seconds != Math.floor(event.time)) {
+		tick();
+		seconds = Math.floor(event.time);
+	}
+
+	// The time passed in seconds since the last frame event:
+	//console.log(event.delta);
 /*
 	var vector = destPoint - currentPoint.position;	
 	currentPoint.position += vector/10;
