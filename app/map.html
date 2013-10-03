@@ -15,12 +15,13 @@
         height: 480px;
       }
 
-
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/FileSaver.js"></script>
+    <script type="text/javascript" src="js/loadgpx.js"></script>
+
     <script>
   var markers = new Array();
   /*
@@ -53,7 +54,7 @@
   var browserSupportFlag =  new Boolean();
 
   function initialize() {
-    var chicago = new google.maps.LatLng(30, -156);
+    var chicago = new google.maps.LatLng(20, -156);
     var myOptions = {
       zoom: 7,
       center: chicago,
@@ -121,11 +122,60 @@ function findMe() {
     map.setCenter(initialLocation);
   }
 
-
   google.maps.event.addDomListener(window, 'load', initialize);
+
+
+  // 
+// load gpx portion
+// http://darrenwiens.net/gpxreader.html
+  // TODO put this into jquery to avoid js loading problems
+  function handleFileSelect(evt) {
+    
+    var files = evt.target.files; // FileList object
+    // files is a FileList of File objects. List some properties.
+    //document.getElementById('emailLink').style.visibility = 'visible';
+    //theURL = 'mailto:dwiens@edynamics.com?subject=GPX file&body=Attach GPX file';
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+    
+      var parseXml;
+      if (typeof window.DOMParser != "undefined") {
+        parseXml = function(xmlStr) {
+          return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+        };
+      } else if (typeof window.ActiveXObject != "undefined" &&
+           new window.ActiveXObject("Microsoft.XMLDOM")) {
+        parseXml = function(xmlStr) {
+          var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+          xmlDoc.async = "false";
+          xmlDoc.loadXML(xmlStr);
+          return xmlDoc;
+        };
+      } else {
+        throw new Error("No XML parser found");
+      }
+      var xml = parseXml(evt.target.result);
+      
+      
+      
+      if (evt.target.readyState == FileReader.DONE) {
+        var parser = new GPXParser(xml, map);
+        parser.setTrackColour("#ff0000");     // Set the track line colour
+        parser.setTrackWidth(1);          // Set the track line width
+        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
+        parser.centerAndZoom(xml);
+        parser.addTrackpointsToMap();         // Add the trackpoints
+        parser.addWaypointsToMap();           // Add the waypoints
+      }
+    };
+    var filetext = reader.readAsText(files[0]);
+    
+  }
+
     </script>
 
     <script>
+// Save GPX Section 
 $(function(view) {
 "use strict";
 
@@ -166,20 +216,10 @@ $( "#text-options" ).submit(function( event ) {
 	 }
 });
 
-// text_options_form.addEventListener("submit", function(event) {
-// 	event.preventDefault();
-// 	var BB = get_blob();
-// 	saveAs(
-// 		  new BB(
-// 			  [text.value || text.placeholder]
-// 			, {type: "text/plain;charset=" + document.characterSet}
-// 		)
-// 		, (text_filename.value || text_filename.placeholder) + ".txt"
-// 	);
-// 	var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-// 	saveAs(blob, "hello world.txt");
 
-// }, false);
+// inside of jquery so document is loaded
+document.getElementById('file').addEventListener('change', handleFileSelect, false);
+
 
 });
     </script>
@@ -196,7 +236,10 @@ $( "#text-options" ).submit(function( event ) {
 			<br>
 			<br>
 			<input type="button" value="Find Me" onClick="findMe();"/>
-		
+      <br>
+        <h4>Upload and plot GPX</h4>
+      <input type="file" id="file" name="file">
+    
 			
 			<h4>Save GPX</h4>
 			<form id="text-options">
