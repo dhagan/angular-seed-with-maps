@@ -4,7 +4,7 @@ var path;
 var textItem = new PointText({
 	content: 'Click and drag to draw a line.',
 	point: new Point(500, 440),
-	fillColor: 'black',
+	fillColor: 'black'
 });
 
 
@@ -75,7 +75,7 @@ randLine.opacity = 0;
 randLine.dashArray = [3,3];
 var pointCount = 0;
 
-var currentPoint = new Path.Star(maxPoint * Point.random(),5,10,3);
+var currentPoint = new Path.Star(maxPoint * Point.random(),3,10,3);
 currentPoint.strokeColor = 'black';
 currentPoint.strokeWidth = 2;
 
@@ -171,9 +171,17 @@ google.maps.event.addListener(map, 'tilesloaded', function()
 
 var seconds = 0;
 var index = 0;
+
 function tick() {
-	currentPoint.position.x = 100 + (track[index++][1]*10);
-	if (index >= 9) {
+	//currentPoint.position.x = 100 + (track[index++][1]*10);
+	//console.log(track[index][0]);
+	var latLng = new google.maps.LatLng(track[index][0], track[index][1], false);
+	var p = latLngToPoint(latLng);
+	currentPoint.position.x = p.x;
+	currentPoint.position.y = p.y;
+	console.log ( p.x , p.y);
+	index++;
+	if (index > track.length - 1) {
 		index = 0;
 	}
 }
@@ -187,9 +195,9 @@ function onFrame(event)
 	// The total amount of time passed since
 	// the first frame event in seconds:
 	//console.log(event.time);
-
+tick();
 	if ( seconds != Math.floor(event.time)) {
-		tick();
+		
 		seconds = Math.floor(event.time);
 	}
 
@@ -253,6 +261,7 @@ $(function() {
       		//currentPoint.moveTo(new Point( 100, 100 + (10*ui.value)));
       		//new Path.Star(maxPoint * Point.random(),5,10,3);
       		y = y + ui.value;
+
       		//path.lineTo(start + [ 100, -50 + (10*ui.value)]);
            //path.lineTo(start + [ 100, y]);
            currentPoint.position.x += ui.value * 10;
@@ -263,3 +272,57 @@ $(function() {
     }).attr("title", "Opacity Control");
  // $('.ui-slider-handle').height(50);
 });
+
+
+
+ function handleFileSelect(evt) {
+    
+    var files = evt.target.files; // FileList object
+    // files is a FileList of File objects. List some properties.
+    //document.getElementById('emailLink').style.visibility = 'visible';
+    //theURL = 'mailto:dwiens@edynamics.com?subject=GPX file&body=Attach GPX file';
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+    
+      var parseXml;
+      if (typeof window.DOMParser != "undefined") {
+        parseXml = function(xmlStr) {
+          return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+        };
+      } else if (typeof window.ActiveXObject != "undefined" &&
+           new window.ActiveXObject("Microsoft.XMLDOM")) {
+        parseXml = function(xmlStr) {
+          var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+          xmlDoc.async = "false";
+          xmlDoc.loadXML(xmlStr);
+          return xmlDoc;
+        };
+      } else {
+        throw new Error("No XML parser found");
+      }
+      var xml = parseXml(evt.target.result);
+
+      
+      if (evt.target.readyState == FileReader.DONE) {
+        var parser = new GPXParser(xml, map);
+        parser.setTrackColour("#ff0000");     // Set the track line colour
+        parser.setTrackWidth(1);          // Set the track line width
+        parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
+        track = parser.centerAndZoom(xml);
+        parser.addTrackpointsToMap();         // Add the trackpoints
+        parser.addWaypointsToMap();           // Add the waypoints
+      }
+    };
+    var filetext = reader.readAsText(files[0]);
+    
+  }
+
+// Save GPX Section 
+$(function(view) {
+"use strict";
+
+  // inside of jquery so document is loaded
+document.getElementById('file').addEventListener('change', handleFileSelect, false);
+
+});
+

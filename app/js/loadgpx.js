@@ -185,6 +185,8 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
     var maxlat = 0;
     var minlon = 0;
     var maxlon = 0;
+    // DJH
+    var track = new Array();
 
     for(var pointtype = 0; pointtype < pointlist.length; pointtype++) {
 
@@ -203,6 +205,9 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
         for(var i = 0; i < trackpoints.length; i++) {
             var lon = parseFloat(trackpoints[i].getAttribute("lon"));
             var lat = parseFloat(trackpoints[i].getAttribute("lat"));
+
+            // DJH 
+            track.push(new Array( lat, lon));
 
             if(lon < minlon) minlon = lon;
             if(lon > maxlon) maxlon = lon;
@@ -225,6 +230,7 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
             new google.maps.LatLng(maxlat, maxlon));
     this.map.setCenter(new google.maps.LatLng(centerlat, centerlon));
     this.map.fitBounds(bounds);
+    return track;
 }
 
 GPXParser.prototype.centerAndZoomToLatLngBounds = function(latlngboundsarray) {
