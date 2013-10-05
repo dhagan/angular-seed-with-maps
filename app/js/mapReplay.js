@@ -161,17 +161,39 @@ google.maps.event.addListener(map, 'tilesloaded', function () {
 
 
 
-var index = 0;
+var stepIndex = 0;
+var stepSize = 5;
 function tick() {
-    var latLng = new google.maps.LatLng(track[index][0], track[index][1], false);
+    var latLng = new google.maps.LatLng(track[stepIndex][0], track[stepIndex][1], false);
     var p = latLngToPoint(latLng);
     currentPoint.position.x = p.x;
     currentPoint.position.y = p.y;
     console.log(p.x, p.y);
     textItem.content = latLng.lat() + ', ' + latLng.lng();
-    index++;
-    if (index > track.length - 1) {
-        index = 0;
+    stepIndex+=stepSize;
+    if (stepIndex > track.length - 1) {
+        stepIndex = 0;
+    }
+}
+
+function setStepSize(buttonMode) {
+    var cheat = 5;
+    switch (buttonMode) {
+        case 'forward':
+            stepSize = cheat;
+            break;
+        case 'rewind':
+            stepSize = -cheat;
+            break;
+        case 'fastforward':
+            stepSize = 4 * cheat;
+            break;
+        case 'fastrewind':
+            stepSize = - 4* cheat;
+            break;
+        case 'stop':
+            stepSize = 0;
+            break;
     }
 }
 
@@ -209,19 +231,11 @@ $(function () {
         value: 0.0,
         step: 1.0,
         min: 0,
-        max: 100,
+        max: 11000,
         slide: function (event, ui) {
-            textItem.content = 'ui.value: ' + ui.value;
-            console.log(ui.value, y);
-            uiValue = ui.value;
-            //currentPoint.moveTo(new Point( 100, 100 + (10*ui.value)));
-            //new Path.Star(maxPoint * Point.random(),5,10,3);
-            y = y + ui.value;
-
-            //path.lineTo(start + [ 100, -50 + (10*ui.value)]);
-            //path.lineTo(start + [ 100, y]);
-            currentPoint.position.x += ui.value * 10;
-            randLine.lastSegment.point = currentPoint.position;
+            setStepSize('stop');
+            stepIndex = ui.value;
+            console.log(ui.value);
         },
         stop: function (event, ui) {
         }
