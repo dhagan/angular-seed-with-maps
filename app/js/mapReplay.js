@@ -8,18 +8,7 @@ var textItem = new PointText({
 
 
 // straw dog track; orig
-var track = [
-    [1.0, 1.1],
-    [1.0, 2.1],
-    [1.0, 3.1],
-    [1.0, 4.1],
-    [1.0, 5.1],
-    [1.0, 6.1],
-    [1.0, 7.1],
-    [1.0, 8.1],
-    [1.0, 0.1],
-    [1.0, 10.1]
-];
+var track = null;
 
 
 function onMouseDown(event) {
@@ -73,9 +62,19 @@ randLine.opacity = 0;
 randLine.dashArray = [3, 3];
 var pointCount = 0;
 
-var currentPoint = new Path.Star(maxPoint * Point.random(), 3, 10, 3);
-currentPoint.strokeColor = 'black';
-currentPoint.strokeWidth = 2;
+var boatIcons = new Array();
+var numBoats = 50;
+function newBoats() {
+    for (var i = 0; i < numBoats; i++) {
+        var currentPoint = new Path.Star(maxPoint * Point.random(), 3, 10, 3);
+        currentPoint.strokeColor = 'black';
+        currentPoint.strokeWidth = 2;
+        boatIcons.push(currentPoint);
+    }
+}
+
+newBoats();
+
 
 var destPoint = maxPoint * Point.random();
 
@@ -108,7 +107,7 @@ function latLngToPoint(latLng) {
     var ePixelPoint = neWorldPoint.x * Math.pow(2, map.getZoom());
     var nPixelPoint = neWorldPoint.y * Math.pow(2, map.getZoom());
     var wPixelPoint = swWorldPoint.x * Math.pow(2, map.getZoom());
-    var sPixelPoint = swWorldPoint.y * Math.pow(2, map.getZoom());
+    //var sPixelPoint = swWorldPoint.y * Math.pow(2, map.getZoom());
     var screenPixelX = calPixelPointx - wPixelPoint;
     var screenPixelY = calPixelPointy - nPixelPoint;
     var point = new Point(screenPixelX, screenPixelY);
@@ -156,20 +155,26 @@ function calcRoute() {
 
 
 google.maps.event.addListener(map, 'tilesloaded', function () {
-    startLatLng = pointToLatLng(currentPoint.position);
+    //startLatLng = pointToLatLng(currentPoint.position);
 });
-
 
 
 var stepIndex = 0;
 var stepSize = 5;
 function tick() {
-    var latLng = new google.maps.LatLng(track[stepIndex][0], track[stepIndex][1], false);
-    var p = latLngToPoint(latLng);
-    currentPoint.position.x = p.x;
-    currentPoint.position.y = p.y;
-    console.log(p.x, p.y);
-    textItem.content = latLng.lat() + ', ' + latLng.lng();
+    if (!track) return;
+    //console.log('track ' + track[stepIndex][0][1] + ' --- ' + boatIcons.length);
+    for (var i = 0; i < boatIcons.length; i++) {
+        console.log('track ' + track[stepIndex]);
+        var latLng = new google.maps.LatLng(track[stepIndex][i][0], track[stepIndex][i][1], false);
+        textItem.content = latLng.lat() + ', ' + latLng.lng();
+        var p = latLngToPoint(latLng);
+        boatIcons[i].position.x = p.x;
+        boatIcons[i].position.y = p.y;
+    }
+
+    //console.log(p.x, p.y);
+    //textItem.content = latLng.lat() + ', ' + latLng.lng();
     stepIndex+=stepSize;
     if (stepIndex > track.length - 1) {
         stepIndex = 0;
@@ -224,7 +229,7 @@ function corners() {
 corners();
 
 var y = -50;
-var uiValue = 0;
+//var uiValue = 0;
 
 $(function () {
     $("#sliderOpacity").slider({
@@ -235,7 +240,7 @@ $(function () {
         slide: function (event, ui) {
             setStepSize('stop');
             stepIndex = ui.value;
-            console.log(ui.value);
+            //console.log(ui.value);
         },
         stop: function (event, ui) {
         }
