@@ -2,20 +2,32 @@
 $(function (view) {
     "use strict";
 
-    var map;
+    var map, cloud;
     var track;
+    var markers = [];
+
     function initialize() {
-        var maui = new google.maps.LatLng(20, -156);
+        //var maui = new google.maps.LatLng(20, -156);
+        // 37.8600° N, 122.4300° W
+        var sf =  new google.maps.LatLng(37.86, -122.43);
         var myOptions = {
             zoom: 7,
-            center: maui,
+            center: sf,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+        makeMarker(sf);
+        cloud = new CloudOverlay(markers, map);
     }
 
     initialize();
+
+    function makeMarker(location) {
+        var markerOptions = {map: map, position: new google.maps.LatLng(location.lat, location.lng)};
+        var marker = new google.maps.Marker(markerOptions);
+        markers.push(marker);
+    }
+
    // parse gpx
     function parseGPX(gpx) {
         var parseXml;
@@ -37,7 +49,7 @@ $(function (view) {
         var xml = parseXml(gpx);
 
         var parser = new GPXParser(xml, map);
-        parser.setTrackColour("#ff0000");     // Set the track line colour
+        parser.setTrackColour("#ffff00");     // Set the track line colour
         parser.setTrackWidth(1);          // Set the track line width
         parser.setMinTrackPointDelta(0.001);      // Set the minimum distance between track points
         track = parser.centerAndZoom(xml);
@@ -50,7 +62,7 @@ $(function (view) {
         url: "eight_ball.gpx",
         async: false,
         success: function (text) {
-            parseGPX(text);
+           parseGPX(text);
         }
     });
 
