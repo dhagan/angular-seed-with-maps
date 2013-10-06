@@ -10,14 +10,32 @@
     <script src="js/raphaelboth.js"></script>
     <script src="js/cloudoverlay.js"></script>
     <script src="js/mapRaphael.js"></script>
+    <script>
+        // global scope; todo change this to jqueryUI anyway
+        var overlay;
+        $(function() {
+            $( "#sliderOpacity" ).slider({
+                value:0.0,
+                step: 1.0,
+                min:0,
+                max:100,
+                slide: function( event, ui ) {
+                    console.log(ui.value);
+                },
+                stop: function( event, ui ) {
+                }
+            }).attr("title", "Opacity Control");
+            // $('.ui-slider-handle').height(50);
+        });
+    </script>
 </head>
 <body>
 <div id ="panel">
-    <input type="button" value="Toggle visibility" onclick="overlay.toggle();"></input>
-    <input type="button" value="Toggle DOM attachment" onclick="overlay.toggleDOM();"></input>
+    <input type="button" value="<<" onclick="overlay.rewind();"></input>
+    <input type="button" value=">>" onclick="overlay.forward();"></input>
+    <div id="sliderOpacity"></div>
 </div>
 <div id="map-canvas"></div>
-<div id="sliderOpacity" style="position:absolute;top:440px;left:0px;width:630px;z-index: 5;"></div>
 </div>
 </body>
 </html>

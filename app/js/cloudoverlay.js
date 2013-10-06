@@ -136,6 +136,15 @@ CloudOverlay.prototype.animateStars = function() {
   }
 };
 
+CloudOverlay.prototype.forward = function(){
+    console.log('forward()');
+}
+
+CloudOverlay.prototype.rewind = function(){
+    console.log('rewind()');
+}
+
+
 /**
  * Called when overlay is removed from map.
  * Removes references to objects.

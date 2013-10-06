@@ -17,7 +17,7 @@ $(function (view) {
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
         makeMarker(sf);
-        cloud = new CloudOverlay(markers, map);
+        overlay = cloud = new CloudOverlay(markers, map);
     }
 
     initialize();
