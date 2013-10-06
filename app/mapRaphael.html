@@ -2,19 +2,22 @@
 <html>
 <head>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link href="css/mapOverlay.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <!-- Load the Paper.js library -->
     <script type="text/javascript" src="js/loadgpx.js"></script>
     <script src="js/raphaelboth.js"></script>
     <script src="js/cloudoverlay.js"></script>
-    <script src="js/raphaelboth.js"></script>
     <script src="js/mapRaphael.js"></script>
 </head>
 <body>
-<div id="map-canvas" style="position:absolute;top:0;left:0;width:640px;height:480px"></div>
-<div id="sliderOpacity" style="position:relative;top:440px;left:0px;width:630px"></div>
+<div id ="panel">
+    <input type="button" value="Toggle visibility" onclick="overlay.toggle();"></input>
+    <input type="button" value="Toggle DOM attachment" onclick="overlay.toggleDOM();"></input>
+</div>
+<div id="map-canvas"></div>
+<div id="sliderOpacity" style="position:absolute;top:440px;left:0px;width:630px;z-index: 5;"></div>
 </div>
 </body>
 </html>
