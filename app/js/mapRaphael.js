@@ -3,7 +3,7 @@ $(function (view) {
     "use strict";
 
     var map, cloud;
-    var track;
+    var track = [];
     var markers = [];
 
     function initialize() {
@@ -17,7 +17,7 @@ $(function (view) {
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
         makeMarker(sf);
-        overlay = cloud = new RaceOverlay(markers, map);
+        overlay = cloud = new RaceOverlay(markers, track, map);
     }
 
     initialize();
