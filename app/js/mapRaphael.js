@@ -13,11 +13,11 @@ $(function (view) {
         var myOptions = {
             zoom: 7,
             center: sf,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.SATELLITE
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
         makeMarker(sf);
-        overlay = cloud = new CloudOverlay(markers, map);
+        overlay = cloud = new RaceOverlay(makeMarker, track, map);
     }
 
     initialize();

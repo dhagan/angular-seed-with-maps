@@ -8,7 +8,7 @@
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="js/loadgpx.js"></script>
     <script src="js/raphaelboth.js"></script>
-    <script src="js/cloudoverlay.js"></script>
+    <script src="js/raceoverlay.js"></script>
     <script src="js/mapRaphael.js"></script>
     <script>
         // global scope; todo change this to jqueryUI anyway
@@ -18,9 +18,10 @@
                 value:0.0,
                 step: 1.0,
                 min:0,
-                max:100,
+                max:11500,
                 slide: function( event, ui ) {
-                    console.log(ui.value);
+                    //console.log(ui.value);
+                    overlay.setIndex(ui.value);
                 },
                 stop: function( event, ui ) {
                 }
@@ -33,9 +34,8 @@
 <div id ="panel">
     <input type="button" value="<<" onclick="overlay.rewind();"></input>
     <input type="button" value=">>" onclick="overlay.forward();"></input>
-    <div id="sliderOpacity"></div>
+    <div id="sliderOpacity" style="width: 500px"></div>
 </div>
 <div id="map-canvas"></div>
-</div>
 </body>
 </html>
