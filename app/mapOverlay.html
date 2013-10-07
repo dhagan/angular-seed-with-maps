@@ -15,6 +15,14 @@
         // overlay to or from the map.
 
         var overlay;
+        var map;
+        var markers = [];
+
+        function makeMarker(location) {
+            var markerOptions = {map: map, position: new google.maps.LatLng(location.lat, location.lng)};
+            var marker = new google.maps.Marker(markerOptions);
+            markers.push(marker);
+        }
 
         function initialize() {
             //var myLatLng = new google.maps.LatLng(62.323907, -150.109291);
@@ -25,7 +33,7 @@
                 mapTypeId: google.maps.MapTypeId.SATELLITE
             };
 
-            var map = new google.maps.Map(document.getElementById('map-canvas'),
+            map = new google.maps.Map(document.getElementById('map-canvas'),
                     mapOptions);
 
             var swBound = new google.maps.LatLng(62.281819, -150.287132);
@@ -36,7 +44,8 @@
             var srcImage = 'https://developers.google.com/maps/documentation/javascript/';
             srcImage += 'examples/full/images/talkeetna.png';
 
-            overlay = new CloudOverlay(null, map);
+            makeMarker(myLatLng);
+            overlay = new RaceOverlay(markers, map);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
