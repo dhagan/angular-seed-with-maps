@@ -127,9 +127,10 @@ RaceOverlay.prototype.draw = function () {
     if (!this.getProjection()) {
         return;
     }
+    var sf =  new google.maps.LatLng(37.86, -122.43);
     this._setSize();
 
-    // var randX = Math.floor(Math.random() * (race.radius - 80));
+/*    // var randX = Math.floor(Math.random() * (race.radius - 80));
     // var randY = Math.floor(Math.random() * (race.radius - 80));
     var star = this.canvas.g.star(100, 100, 8);
     star.attr({stroke: 'none', fill: '90-#fff-#fff'});
@@ -144,17 +145,16 @@ RaceOverlay.prototype.draw = function () {
 
     circle = this.canvas.circle(canvasWidth, canvasHeight, 5);
     circle.attr({stroke: 'none', fill: '90-#fff-#fff'});
-
-    var sf =  new google.maps.LatLng(37.86, -122.43);
+*/
     var p = this._fromLatLngToCanvasPixel(sf);
     star = this.canvas.g.star(p.x, p.y, 10);
     star.attr({stroke: 'none', fill: '90-#fff-#fff'});
     console.log(p.x, p.y);
 
-    var divPixel = this.getProjection().fromLatLngToDivPixel(sf);
-    star = this.canvas.g.star(divPixel.x, divPixel.y, 5);
-    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-    console.log(divPixel.x, divPixel.y);
+//    var divPixel = this.getProjection().fromLatLngToDivPixel(sf);
+//    star = this.canvas.g.star(divPixel.x, divPixel.y, 5);
+//    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+//    console.log(divPixel.x, divPixel.y);
 
 
 //    var overlayProjection = this.getProjection();
