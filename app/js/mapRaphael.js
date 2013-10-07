@@ -17,6 +17,7 @@ $(function (view) {
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
         makeMarker(sf);
+        //overlay = cloud = new CloudOverlay(markers, map);
         overlay = cloud = new RaceOverlay(markers, track, map);
     }
 
