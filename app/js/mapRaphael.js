@@ -2,9 +2,8 @@
 $(function (view) {
     "use strict";
 
-    var map, cloud;
+    var map;
     var track = [];
-    var markers = [];
 
     function initialize() {
         //var maui = new google.maps.LatLng(20, -156);
@@ -16,18 +15,9 @@ $(function (view) {
             mapTypeId: google.maps.MapTypeId.SATELLITE
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
-        makeMarker(sf);
-        //overlay = cloud = new CloudOverlay(markers, map);
-        overlay = cloud = new RaceOverlay(markers, track, map);
     }
 
     initialize();
-
-    function makeMarker(location) {
-        var markerOptions = {map: map, position: new google.maps.LatLng(location.lat, location.lng)};
-        var marker = new google.maps.Marker(markerOptions);
-        markers.push(marker);
-    }
 
    // parse gpx
     function parseGPX(gpx) {
@@ -56,6 +46,7 @@ $(function (view) {
         track = parser.centerAndZoom(xml);
         parser.addTrackpointsToMap();         // Add the trackpoints
         parser.addWaypointsToMap();           // Add the waypoints
+        overlay  = new RaceOverlay(track, map);
     }
 
 

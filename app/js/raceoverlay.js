@@ -4,33 +4,17 @@
 RaceOverlay.prototype = new google.maps.OverlayView();
 
 /**
- * Object for holding race info.
- * @constructor
- */
-function Race() {
-    this.radius;
-    this.div;
-    this.canvas;
-    //   this.stars = [];
-    this.track = [];
-    this.stepIndex = 0;
-}
-
-
-/**
  * Race overlay.
  * @constructor
  * @param {Array} markers Initial array of markers.
  * @param {Map} map Map to put overlay on.
  */
-function RaceOverlay(_markers, _track, _map) {
-    this.markers = _markers || [];
+function RaceOverlay(_track, _map) {
     this.track = _track;
-    //   this.numRaces = 8;
-    //   this.races = [];
-    //   this.setupRaces();
-
     this.setMap(_map);
+    this.numBoats = 50;
+    this.stepIndex = 0;
+    this.stepIndexSize = 5;
 }
 
 /**
@@ -38,41 +22,41 @@ function RaceOverlay(_markers, _track, _map) {
  * @private
  */
 RaceOverlay.prototype._setSize = function () {
-    this.canvasCenter = this.getProjection().fromLatLngToDivPixel(this.getMap().getCenter());
-    this.canvasWidth = Math.min(this.getProjection().getWorldWidth(), 60000);
-    this.canvasHeight = Math.min(this.getProjection().getWorldWidth(), 60000);
-    this.div.style.left = this.canvasCenter.x - this.canvasWidth / 2 + 'px';
-    this.div.style.top = this.canvasCenter.y - this.canvasHeight / 2 + 'px';
-    this.div.style.width = this.canvasWidth + 'px';
-    this.div.style.height = this.canvasHeight + 'px';
+    this.paperCenter = this.getProjection().fromLatLngToDivPixel(this.getMap().getCenter());
+    this.paperWidth = Math.min(this.getProjection().getWorldWidth(), 60000);
+    this.paperHeight = Math.min(this.getProjection().getWorldWidth(), 60000);
+    this.div.style.left = this.paperCenter.x - this.paperWidth / 2 + 'px';
+    this.div.style.top = this.paperCenter.y - this.paperHeight / 2 + 'px';
+    this.div.style.width = this.paperWidth + 'px';
+    this.div.style.height = this.paperHeight + 'px';
 
-    this.canvas.setSize(this.canvasWidth, this.canvasHeight);
+    this.paper.setSize(this.paperWidth, this.paperHeight);
 }
 
 /**
- * Convert lan/lng map coordinates to the canvas point coordinates.
+ * Convert lan/lng map coordinates to the paper point coordinates.
  */
 RaceOverlay.prototype._fromLatLngToCanvasPixel = function (latLng) {
     var divPixel = this.getProjection().fromLatLngToDivPixel(latLng);
-    var left = this.canvasCenter.x - this.canvasWidth / 2;
-    var top = this.canvasCenter.y - this.canvasHeight / 2;
+    var left = this.paperCenter.x - this.paperWidth / 2;
+    var top = this.paperCenter.y - this.paperHeight / 2;
     var x = divPixel.x - left;
     var y = divPixel.y - top;
-    var canvasPixel = new google.maps.Point(x, y);
+    var paperPixel = new google.maps.Point(x, y);
 
-    return canvasPixel;
+    return paperPixel;
 };
 
 /**
- * Convert canvas point coordinates to the lan/lng map coordinates.
+ * Convert paper point coordinates to the lan/lng map coordinates.
  */
-RaceOverlay.prototype._fromCanvasPixelToLatLng = function (canvasPixel) {
+RaceOverlay.prototype._fromCanvasPixelToLatLng = function (paperPixel) {
     // borders of the map
-    var left = this.canvasCenter.x - this.canvasWidth / 2;
-    var top = this.canvasCenter.y - this.canvasHeight / 2;
-    // point coordinates on the canvas layer
-    var x = canvasPixel.x + left;
-    var y = canvasPixel.y + top;
+    var left = this.paperCenter.x - this.paperWidth / 2;
+    var top = this.paperCenter.y - this.paperHeight / 2;
+    // point coordinates on the paper layer
+    var x = paperPixel.x + left;
+    var y = paperPixel.y + top;
     var divPixel = new google.maps.Point(x, y);
     var latLng = this.getProjection().fromDivPixelToLatLng(divPixel);
 
@@ -81,32 +65,11 @@ RaceOverlay.prototype._fromCanvasPixelToLatLng = function (canvasPixel) {
 
 
 /**
- * Create race objects
- * @private
- */
-/*RaceOverlay.prototype.setupRaces = function() {
- for (var i = 0; i < this.numRaces; i++) {
- var race = new Race();
- this.races.push(race);
- }
- };*/
-
-/**
- * Set new array of markers, redraw overlay.
- * @param {Array} markers New array of markers.
- */
-/*RaceOverlay.prototype.setMarkers = function(_markers) {
- this.markers = _markers;
- this.draw();
- };*/
-
-
-/**
- * Create initial divs and canvases for races.
+ * Create initial divs and paperes for races.
  * Called when race overlay is added to map initially.
  */
 RaceOverlay.prototype.onAdd = function () {
-    //var me = this;
+    var me = this;
     var panes = this.getPanes();
     //for (var i = 0; i < this.numRaces; i++) {
     this.div = document.createElement('DIV');
@@ -115,10 +78,11 @@ RaceOverlay.prototype.onAdd = function () {
     this.div.style.overflow = 'visible';
     //this.races[i].div = div;
     panes.overlayImage.appendChild(this.div);
-    this.canvas = Raphael(this.div);
-    //this.races[i].canvas = canvas;
-    //}
-    //this.starsTimer_ = window.setInterval(function() { me.animateStars();}, 2000);
+    this.paper = Raphael(this.div);
+
+    this.starsTimer_ = window.setInterval(function () {
+        me.animateRace();
+    }, 10);
 };
 
 /**
@@ -128,102 +92,68 @@ RaceOverlay.prototype.draw = function () {
     if (!this.getProjection()) {
         return;
     }
-    var sf =  new google.maps.LatLng(37.86, -122.43);
+    var sf = new google.maps.LatLng(37.86, -122.43);
     this._setSize();
 
-/*    // var randX = Math.floor(Math.random() * (race.radius - 80));
-    // var randY = Math.floor(Math.random() * (race.radius - 80));
-    var star = this.canvas.g.star(100, 100, 8);
-    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-
-    canvasWidth = Math.min(this.getProjection().getWorldWidth(), 60000);
-    canvasHeight = Math.min(this.getProjection().getWorldWidth(), 60000);
-    console.log(canvasWidth, canvasHeight);
-
-    var radius = 10;
-    var circle = this.canvas.circle(radius / 2, radius / 2, radius / 2);
-    circle.attr({stroke: 'none', fill: '90-#fff-#fff'});
-
-    circle = this.canvas.circle(canvasWidth, canvasHeight, 5);
-    circle.attr({stroke: 'none', fill: '90-#fff-#fff'});
-*/
     var p = this._fromLatLngToCanvasPixel(sf);
-    star = this.canvas.g.star(p.x, p.y, 10);
+    star = this.paper.g.star(p.x, p.y, 10);
     star.attr({stroke: 'none', fill: '90-#fff-#fff'});
     console.log(p.x, p.y);
 
-
 //    var divPixel = this.getProjection().fromLatLngToDivPixel(sf);
-//    star = this.canvas.g.star(divPixel.x, divPixel.y, 5);
+//    star = this.paper.g.star(divPixel.x, divPixel.y, 5);
 //    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
 //    console.log(divPixel.x, divPixel.y);
 
-
-//    var overlayProjection = this.getProjection();
-//    for (var i = 0; i < this.markers.length; i++) {
-//        if (this.markers[i]) {
-//            var race = this.races[i];
-//            var latlng = this.markers[i].getPosition();
-//            var div = race.div;
-//
-//            var radius = 170 - (this.markers.length - i) * 20;
-//            var center = overlayProjection.fromLatLngToDivPixel(latlng);
-//            var left = center.x - radius / 2;
-//            var top = center.y - radius / 2;
-//            div.style.left = left + 'px';
-//            div.style.top = top + 'px';
-//            div.style.width = radius + 'px';
-//            div.style.height = radius + 'px';
-//            race.canvas.setSize(radius, radius);
-//            race.radius = radius;
-//            if (race.circle) {
-//                race.circle.remove();
-//            }
-//            race.circle = race.canvas.circle(radius / 2, radius / 2, radius / 2)
-//            race.circle.attr({stroke: 'none', fill: 'r(.5,.5)#fff-#fff', opacity: 0.0});
-//            for (var j = 0; j < race.stars.length; j++) {
-//                race.stars[j].remove();
-//            }
-//        }
-//    }
     this.animateRace();
 };
 
 
-
+RaceOverlay.prototype._drawBoats = function(me) {
+    me.paper.clear();
+    for (var i = 0; i < me.numBoats; i++) {
+        var sf = new google.maps.LatLng(me.track[me.stepIndex][i][0], me.track[me.stepIndex][i][1]);
+        var p = me._fromLatLngToCanvasPixel(sf);
+        star = me.paper.g.star(p.x, p.y, 10);
+        star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+        //console.log(p.x, p.y);
+    }
+}
 /**
  * Generates animated stars for current location.
  */
-RaceOverlay.prototype.animateRace = function() {
-/*    var me = this;
-    var currentNum = this.markers.length - 1;
-    var race = this.races[currentNum];
-    var canvas = race.canvas;
-    var numStars = Math.floor(race.radius / 40);
-    race.stars = [];*/
-    //for (var j = 0; j < numStars; j++) {
-
-        window.setTimeout(function() {
-            var sf =  new google.maps.LatLng(this.track[this.stepIndex][0], this.track[this.stepIndex][1]);
-            var p = this._fromLatLngToCanvasPixel(sf);
-            star = this.canvas.g.star(p.x, p.y, 10);
-            star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-            console.log(p.x, p.y);
-            this.stepIndex++;
-        }, 300);
-    //}
+RaceOverlay.prototype.animateRace = function () {
+    RaceOverlay.prototype._drawBoats(this);
+    this.stepIndex+= this.stepIndexSize;
 };
 
 RaceOverlay.prototype.forward = function () {
+    var me = this;
+    this.stepIndexSize = 5;
     console.log('forward()');
+    window.clearInterval(me.starsTimer_);
+    this.starsTimer_ = window.setInterval(function () {
+        me.animateRace();
+    }, 10);
 };
 
 RaceOverlay.prototype.rewind = function () {
+    var me = this;
+    this.stepIndexSize = -5;
     console.log('rewind()');
+    window.clearInterval(me.starsTimer_);
+    this.starsTimer_ = window.setInterval(function () {
+        me.animateRace();
+    }, 10);
 };
 
 RaceOverlay.prototype.setIndex = function (value) {
+    var me = this;
+    window.clearInterval(me.starsTimer_);
     console.log('index ' + value);
+    this.stepIndexSize = 0;
+    this.stepIndex = value;
+    RaceOverlay.prototype._drawBoats(this);
 };
 
 /**
@@ -254,39 +184,6 @@ RaceOverlay.prototype.onRemove = function () {
 //        }
 //    }
 //    // Stop the timer that creates stars.
-//    window.clearInterval(this.starsTimer_);
-
-
-    /**
-     * Convert lan/lng map coordinates to the canvas point coordinates.
-     */
-    RaceOverlay.prototype._fromLatLngToCanvasPixel = function (latLng) {
-        var divPixel = this.getProjection().fromLatLngToDivPixel(latLng);
-        var left = this.canvasCenter.x - this.canvasWidth / 2;
-        var top = this.canvasCenter.y - this.canvasHeight / 2;
-        var x = divPixel.x - left;
-        var y = divPixel.y - top;
-        var canvasPixel = new google.maps.Point(x, y);
-
-        return canvasPixel;
-    };
-
-    /**
-     * Convert canvas point coordinates to the lan/lng map coordinates.
-     */
-    RaceOverlay.prototype._fromCanvasPixelToLatLng = function (canvasPixel) {
-        // borders of the map
-        var left = this.canvasCenter.x - this.canvasWidth / 2;
-        var top = this.canvasCenter.y - this.canvasHeight / 2;
-        // point coordinates on the canvas layer
-        var x = canvasPixel.x + left;
-        var y = canvasPixel.y + top;
-        var divPixel = new google.maps.Point(x, y);
-        var latLng = this.getProjection().fromDivPixelToLatLng(divPixel);
-
-        return latLng;
-    };
-
-
-
+    window.clearInterval(this.starsTimer_);
 };
+
