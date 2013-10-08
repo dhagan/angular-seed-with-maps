@@ -13,6 +13,7 @@ function Race() {
     this.canvas;
     //   this.stars = [];
     this.track = [];
+    this.stepIndex = 0;
 }
 
 
@@ -151,6 +152,7 @@ RaceOverlay.prototype.draw = function () {
     star.attr({stroke: 'none', fill: '90-#fff-#fff'});
     console.log(p.x, p.y);
 
+
 //    var divPixel = this.getProjection().fromLatLngToDivPixel(sf);
 //    star = this.canvas.g.star(divPixel.x, divPixel.y, 5);
 //    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
@@ -184,33 +186,33 @@ RaceOverlay.prototype.draw = function () {
 //            }
 //        }
 //    }
-//    this.animateStars();
+    this.animateRace();
 };
+
+
 
 /**
  * Generates animated stars for current location.
  */
-//RaceOverlay.prototype.animateStars = function() {
-//    var me = this;
-//    var currentNum = this.markers.length - 1;
-//    var race = this.races[currentNum];
-//    var canvas = race.canvas;
-//    var numStars = Math.floor(race.radius / 40);
-//    race.stars = [];
-//    for (var j = 0; j < numStars; j++) {
-//        window.setTimeout(function() {
-//            if ((me.markers.length - 1) == currentNum) {
-//                var randX = Math.floor(Math.random() * (race.radius - 80));
-//                var randY = Math.floor(Math.random() * (race.radius - 80));
-//                var star = canvas.g.star(randX + 40, randY + 40, 8);
-//                star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-//                star.animate({scale: '0.25 0.25', rotation: 180, opacity: 0},
-//                    500 + 2000 * Math.random(), function() {this.remove();});
-//                race.stars.push(star);
-//            }
-//        }, j * 300);
-//    }
-//};
+RaceOverlay.prototype.animateRace = function() {
+/*    var me = this;
+    var currentNum = this.markers.length - 1;
+    var race = this.races[currentNum];
+    var canvas = race.canvas;
+    var numStars = Math.floor(race.radius / 40);
+    race.stars = [];*/
+    //for (var j = 0; j < numStars; j++) {
+
+        window.setTimeout(function() {
+            var sf =  new google.maps.LatLng(this.track[this.stepIndex][0], this.track[this.stepIndex][1]);
+            var p = this._fromLatLngToCanvasPixel(sf);
+            star = this.canvas.g.star(p.x, p.y, 10);
+            star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+            console.log(p.x, p.y);
+            this.stepIndex++;
+        }, 300);
+    //}
+};
 
 RaceOverlay.prototype.forward = function () {
     console.log('forward()');
