@@ -73,6 +73,7 @@ RaceOverlay.prototype.onAdd = function () {
     var panes = this.getPanes();
     //for (var i = 0; i < this.numRaces; i++) {
     this.div = document.createElement('DIV');
+    this.div.name = 'map-overlay';
     this.div.style.border = '0px solid';
     this.div.style.position = 'absolute';
     this.div.style.overflow = 'visible';
@@ -114,8 +115,21 @@ RaceOverlay.prototype._drawBoats = function(me) {
     for (var i = 0; i < me.numBoats; i++) {
         var sf = new google.maps.LatLng(me.track[me.stepIndex][i][0], me.track[me.stepIndex][i][1]);
         var p = me._fromLatLngToCanvasPixel(sf);
-        star = me.paper.g.star(p.x, p.y, 10);
+        var star = me.paper.g.star(p.x, p.y, 10);
         star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+        star.node.id = i;
+        star.mouseover( function() {
+            //alert(this.node.id);
+            //tooltip
+            $('#map-overlay').next('.point').remove();
+            $('#map-overlay').after($('<div />').addClass('point'));
+            $('.point').html("hello world").css({
+                left: 100,
+                top: 100
+                //left: mouseX - 50,
+                //top: mouseY - 70
+            }).fadeIn();
+        });
         //console.log(p.x, p.y);
     }
 }
