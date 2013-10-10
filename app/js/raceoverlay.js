@@ -96,10 +96,11 @@ RaceOverlay.prototype.draw = function () {
     var sf = new google.maps.LatLng(37.86, -122.43);
     this._setSize();
 
-    var p = this._fromLatLngToCanvasPixel(sf);
-    star = this.paper.g.star(p.x, p.y, 10);
-    star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-    console.log(p.x, p.y);
+    //var p = this._fromLatLngToCanvasPixel(sf);
+    //star = this.paper.g.star(p.x, p.y, 10);
+    //star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+    //console.log(p.x, p.y);
+
 
 //    var divPixel = this.getProjection().fromLatLngToDivPixel(sf);
 //    star = this.paper.g.star(divPixel.x, divPixel.y, 5);
@@ -115,10 +116,12 @@ RaceOverlay.prototype._drawBoats = function(me) {
     for (var i = 0; i < me.numBoats; i++) {
         var sf = new google.maps.LatLng(me.track[me.stepIndex][i][0], me.track[me.stepIndex][i][1]);
         var p = me._fromLatLngToCanvasPixel(sf);
-        var star = me.paper.g.star(p.x, p.y, 10);
-        star.attr({stroke: 'none', fill: '90-#fff-#fff'});
-        star.node.id = i;
-        star.mouseover( function() {
+        //var star = me.paper.g.star(p.x, p.y, 10);
+        var image_1 = me.paper.image('img/sap_boat.png', p.x, p.y, 36, 36);
+        image_1.rotate(Math.random() * 180.0 / 3.145);
+       // star.attr({stroke: 'none', fill: '90-#fff-#fff'});
+        image_1.node.id = i;
+        image_1.mouseover( function() {
             //alert(this.node.id);
             //tooltip
             $('#map-overlay').next('.point').remove();
