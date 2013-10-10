@@ -170,6 +170,12 @@ RaceOverlay.prototype.setIndex = function (value) {
     RaceOverlay.prototype._drawBoats(this);
 };
 
+RaceOverlay.prototype.pause = function () {
+    var me = this;
+    window.clearInterval(me.starsTimer_);
+};
+
+
 /**
  * Called when overlay is removed from map.
  * Removes references to objects.
