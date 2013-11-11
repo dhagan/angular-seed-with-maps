@@ -9,19 +9,47 @@
     <!--
     <script src="js/jquery-1.9.1.js"></script>
 -->
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css"/>
-    <link href="css/mapoverlay.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/loadgpx.js"></script>
-    <script src="js/mapRaphael.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css"/>
+<link href="css/mapoverlay.css" rel="stylesheet">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!-- Load the Paper.js for the graph library -->
+<script type="text/javascript" src="js/paper.js"></script>
+<script type="text/javascript" src="js/loadgpx.js"></script>
+<script src="js/mapKikahi.js"></script>
 </head>
 <body>
-<div id ="panel">
-    <div id="sliderOpacity" style="width: 500px"></div>
-</div>
+
 <div id="map_canvas"></div>
-</body>
+
+    
+        <div id="graph_panel" style="width: 500px">hello world</div>
+   
+
+    <div id ="stats_panel">
+        <div class="well well-small">
+           <table class="layout">
+            <tbody><tr>
+                <td>Time</td>
+                <td>06:07:16</td>
+            </tr>
+            <tr>
+                <td>Elapsed Time</td>
+                <td>06:25:36</td>
+            </tr>
+            <tr>
+                <td>Max Speed</td>
+                <td>15.7<abbr class="unit" title="miles per hour">mi/h</abbr></td>
+            </tr>
+            <tr>
+                <td>Avg Speed</td>
+                <td>4.7<abbr class="unit" title="miles per hour">mi/h</abbr></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+</div>
+
 </html>

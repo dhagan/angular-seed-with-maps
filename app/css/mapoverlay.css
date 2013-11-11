@@ -18,10 +18,19 @@ html, body {
   }
 }
 
-#panel {
+#graph_panel {
   position: absolute;
   bottom: 5px;
   left: 50%;
+  margin-left: -180px;
+  z-index: 5;
+  padding: 5px;
+}
+
+#stats_panel {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
   margin-left: -180px;
   z-index: 5;
   padding: 5px;
