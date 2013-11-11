@@ -46,7 +46,7 @@ $(function (view) {
         track = parser.centerAndZoom(xml);
         parser.addTrackpointsToMap();         // Add the trackpoints
         parser.addWaypointsToMap();           // Add the waypoints
-        overlay  = new RaceOverlay(track, map);
+        //overlay  = new RaceOverlay(track, map);
     }
 
 
