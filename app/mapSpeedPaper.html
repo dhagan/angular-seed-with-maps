@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='css/bootstrap.min.css' />
+    <link rel='stylesheet' href='css/bootstrap-responsive.min.css' />
+    <link rel='stylesheet' href='css/style.css' />
+    <!--
+    <script src="js/jquery-1.9.1.js"></script>
+-->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css"/>
+<link href="css/mapoverlay.css" rel="stylesheet">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=geometry"></script>
+<OwaStorableObject type="Items" version="1" denyCopy="false" denyMove="false"><Items FolderId="LgAAAAAss2HW66kUS45olGCxTEj2AQD+I+bM+WDQQ53x15CjHnoTAAAIkx1ZAAAB" IsCrossFolder="false"><Item ItemId="RgAAAAAss2HW66kUS45olGCxTEj2BwD+I+bM+WDQQ53x15CjHnoTAAAIkx1ZAAB6F5Mo9PYIQ50rRGnXqJM5AABl1P7zAAAJ" ItemType="IPM.Note"/></Items></OwaStorableObject><script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!-- Load the Paper.js for the graph library -->
+<script type="text/javascript" src="js/paper.js"></script>
+<script type="text/javascript" src="js/loadgpxsingle.js"></script>
+<script src="js/mapSpeedPaper.js"></script>
+</head>
+<body>
+
+    <div id="map_canvas"></div>
+    
+    <div id="graph_panel" style="width: 80%;"> 
+        <canvas id="graph_canvas" style="width: 100%; height: 100px;" ></canvas>
+    </div>
+
+    <div id ="stats_panel">
+        <div class="well well-small">
+         <table class="layout">
+            <tbody><tr>
+                <td>Time</td>
+                <td>06:07:16</td>
+            </tr>
+            <tr>
+                <td>Elapsed Time</td>
+                <td>06:25:36</td>
+            </tr>
+            <tr>
+                <td>Max Speed</td>
+                <td>15.7<abbr class="unit" title="miles per hour">mi/h</abbr></td>
+            </tr>
+            <tr>
+                <td>Avg Speed</td>
+                <td>4.7<abbr class="unit" title="miles per hour">mi/h</abbr></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+</html>
