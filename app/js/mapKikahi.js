@@ -70,7 +70,45 @@ $(function () {
     path.lineTo(start.add([ 200, -50 ]));
     view.draw();
 }*/
-function drawProfile(track, trackObjs){
+function drawProfile(track){
+
+            // DJH porfileBuffer this set to 10?
+            var profileBuffer = 10;
+            var changed = false; 
+            var tooltip;
+
+            var locationMarkerFill = new google.maps.Marker({
+        //position: mapOptions.center,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillOpacity: 1,
+            fillColor: "#ffffff"
+        },
+        draggable: false
+    });
+            var locationMarkerStroke = new google.maps.Marker({
+        //position: mapOptions.center,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            strokeWeight: 5
+        },
+        draggable: false
+    });
+
+
+            var locationMarkerFill = new google.maps.Marker({
+        //position: mapOptions.center,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillOpacity: 1,
+            fillColor: "#ffffff"
+        },
+        draggable: false
+    });
+
         //paper.setup(mapOptions.elevationCanvas);
         paper.setup('graph_canvas');
 
@@ -80,17 +118,19 @@ function drawProfile(track, trackObjs){
             project.layers[layer].removeChildren();
         }
 
-        // draw black diagonal line
+        // debug draw black diagonal line
+        /*
         var path = new Path();
         path.strokeColor = 'black';
         var start = new Point(100, 100);
         path.moveTo(start);
         path.lineTo(start.add([ 200, -50 ]));
         view.draw();
+        */
 
         var elevArray = [];
-        for(var j = 0; j < 1000; j++){
-            elevArray.push(Math.random());
+        for(var j = 0; j < track.length; j++){
+            elevArray.push(Math.random() * 100);
         }
         var minElev = Math.min.apply(null, elevArray);
         var maxElev = Math.max.apply(null, elevArray);
@@ -102,7 +142,7 @@ function drawProfile(track, trackObjs){
         }
         var minElevLine = Math.floor(minElev/elevScale) * elevScale;
         var maxElevLine = Math.ceil(maxElev/elevScale) * elevScale;
-        for(j = 0; j < (maxElevLine - minElevLine) / elevScale * 5; j++){
+        for(var j = 0; j < (maxElevLine - minElevLine) / elevScale * 5; j++){
             var myLine = new Path();
             var myLineElev = minElevLine + (j * elevScale / 5);
             var myLineY = (myLineElev - minElev) * (view.viewSize.height / (maxElev - minElev));
@@ -121,15 +161,17 @@ function drawProfile(track, trackObjs){
         var cumulativeLength = 0;
         var myProfileFill = new Path();
         var myProfile = new Path();
-        for(j = 0; j < trackObjs.length; j++){
+        for(j = 0; j < track.length; j++){
             var myX;
             if(j==0){
                 myX = 0;
             }else{
-                cumulativeLength += google.maps.geometry.spherical.computeDistanceBetween(trackObjs[j-1].point, trackObjs[j].point);
+                var prevLatLng = new google.maps.LatLng(track[j-1][0], track[j-1][1]);
+                var latLng = new google.maps.LatLng(track[j][0], track[j][1]);
+                cumulativeLength += google.maps.geometry.spherical.computeDistanceBetween(prevLatLng, latLng);
                 myX = cumulativeLength/track.length * view.viewSize.width;
             }
-            var myY = view.viewSize.height - profileBuffer - ((trackObjs[j].elev-minElev)/(maxElev-minElev) * (view.viewSize.height - (profileBuffer * 2)));
+            var myY = view.viewSize.height - profileBuffer - ((elevArray[j]-minElev)/(maxElev-minElev) * (view.viewSize.height - (profileBuffer * 2)));
             myProfileFill.add(new Point(myX, myY));
             myProfile.add(new Point(myX, myY));
         }
@@ -138,23 +180,24 @@ function drawProfile(track, trackObjs){
         myProfileFill.strokeColor = null;
         myProfileFill.fillColor = "#eeeeee";
         myProfileFill.opacity = 0.8;
-        myProfile.strokeColor = track.strokeColor;
+        myProfile.strokeColor = 'blue'; //track.strokeColor;
         myProfile.strokeWidth = 2;
         myProfile.strokeCap = "round";
         
-        // DJH activeShape = myProfile;
+        // DJH 
+        var activeShape = myProfile;
 
         var elevationMarker = new Path.Circle(new Point(0,0), 5);
         elevationMarker.fillColor = "#ffffff";
         elevationMarker.strokeWidth = 2;
         elevationMarker.visible = false;
 
-/* DJH
+
         // Add mouse listeners
         var tool = new Tool();
         tool.onMouseMove = function(event){
             if(event.point.x > 0 && event.point.x <= view.viewSize.width && event.point.y > 0 && event.point.y <= view.viewSize.height){
-                setActive(activeTrack);
+                //setActive(activeTrack);
                 changed = false;
                 for(j = 0; j < activeShape.segments.length; j++){
                     if(event.point.x >= activeShape.segments[j].point.x - 1 && event.point.x <= activeShape.segments[j].point.x + 1){
@@ -162,7 +205,7 @@ function drawProfile(track, trackObjs){
                             tooltip.remove();
                         }
                         var tooltipText = new PointText(new Point(10, 0));
-                        tooltipText.content = Math.round(activeTrackObjs[j].elev) + " m";
+                        tooltipText.content = "[" + j + "] " + Math.round(elevArray[j]) + " m";
                         tooltipText.fillColor = "#666666";
                         tooltipText.characterStyle.fontSize = 9;
                         var tooltipRect = new Path.Rectangle(new Rectangle(new Point(5, -12), new Size(50, 15)));
@@ -175,14 +218,17 @@ function drawProfile(track, trackObjs){
                             tooltip.position = new Point(activeShape.segments[j].point.x - 36, activeShape.segments[j].point.y);
                         }
                         elevationMarker.position = activeShape.segments[j].point;
-                        elevationMarker.strokeColor = activeTrack.strokeColor;
+                        elevationMarker.strokeColor = 'green'; //activeTrack.strokeColor;
                         elevationMarker.visible = true;                     
-                        var activePath = activeTrack.getPath();
-                        var location = activePath.getAt(j);
+                        // DJH var 
+                        activePath = activeTrack.getPath();
+                        // DJH var 
+                        location = activePath.getAt(j);
                         locationMarkerFill.position = location;
                         locationMarkerFill.setMap(map);
+                        // DJH 
                         locationMarkerStroke.position = location;
-                        locationMarkerStroke.icon.strokeColor = activeTrack.strokeColor;
+                        locationMarkerStroke.icon.strokeColor = 'green'; //activeTrack.strokeColor;
                         locationMarkerStroke.setMap(map);
                     }
                 }
@@ -190,7 +236,7 @@ function drawProfile(track, trackObjs){
                 elevationMarker.visible = false;
                 locationMarkerFill.setMap(null);
                 locationMarkerStroke.setMap(null);
-                setInactive(activeTrack);
+                //setInactive(activeTrack);
                 changed = true;
                 if(tooltip){
                     tooltip.remove();
@@ -198,7 +244,7 @@ function drawProfile(track, trackObjs){
             }
             view.draw();
         }
-        */
+        
 
         view.draw();
     }
