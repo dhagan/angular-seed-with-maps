@@ -77,18 +77,12 @@ function drawProfile(track){
             var changed = false; 
             var tooltip;
 
-            var locationMarkerFill = new google.maps.Marker({
-        //position: mapOptions.center,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 8,
-            fillOpacity: 1,
-            fillColor: "#ffffff"
-        },
-        draggable: false
-    });
+
+
+var sf =  new google.maps.LatLng(37.86, -122.43);
             var locationMarkerStroke = new google.maps.Marker({
-        //position: mapOptions.center,
+        position: map.center,
+        map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 8,
@@ -99,7 +93,8 @@ function drawProfile(track){
 
 
             var locationMarkerFill = new google.maps.Marker({
-        //position: mapOptions.center,
+        position: map.center,
+        map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 8,
@@ -218,16 +213,17 @@ function drawProfile(track){
                             tooltip.position = new Point(activeShape.segments[j].point.x - 36, activeShape.segments[j].point.y);
                         }
                         elevationMarker.position = activeShape.segments[j].point;
-                        elevationMarker.strokeColor = 'green'; //activeTrack.strokeColor;
+                        elevationMarker.strokeColor = 'red'; //activeTrack.strokeColor;
                         elevationMarker.visible = true;                     
                         // DJH var 
-                        activePath = activeTrack.getPath();
+                        //activePath = activeTrack.getPath();
                         // DJH var 
-                        location = activePath.getAt(j);
-                        locationMarkerFill.position = location;
+                        //location = activePath.getAt(j);
+                          var latLng = new google.maps.LatLng(track[j][0], track[j][1]);
+                        locationMarkerFill.position = latLng;// location;
                         locationMarkerFill.setMap(map);
                         // DJH 
-                        locationMarkerStroke.position = location;
+                        locationMarkerStroke.position = latLng; //location;
                         locationMarkerStroke.icon.strokeColor = 'green'; //activeTrack.strokeColor;
                         locationMarkerStroke.setMap(map);
                     }
