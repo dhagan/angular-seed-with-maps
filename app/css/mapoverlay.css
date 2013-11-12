@@ -21,7 +21,7 @@ html, body {
 #graph_panel {
   position: absolute;
   bottom: 5px;
-  left: 50%;
+  left: 10%;
   margin-left: -180px;
   z-index: 5;
   padding: 5px;
