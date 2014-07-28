@@ -122,7 +122,7 @@
                     "position": 1,
                     "product_id": 632910392,
                     "updated_at": "2014-07-18T17:09:50-04:00",
-                    "src": "https://cdn.shopify.com/s/files/1/0006/9093/3842/products/ipod-nano.png?v=1405717790"
+                    "src": "http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-015_larger_1350667726_large.png?v=1350667272"
                 },
                 {
                     "created_at": "2014-07-18T17:09:50-04:00",
@@ -189,6 +189,9 @@
                 }
             ],
             "images": [
+                {
+                    "src" : "http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-002_larger_1350617201_large.png?v=1350616750"
+                }
 
             ]
         }

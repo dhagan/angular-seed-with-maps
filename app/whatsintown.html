@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>ElasticUI Demo</title>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
     <script src="http://code.angularjs.org/1.2.16/angular.js"></script>
     <script src="http://rawgit.com/YousefED/ElasticUI/master/examples/demo/lib/elasticsearch.angular.js"></script>
     <script src="http://rawgit.com/YousefED/ElasticUI/master/examples/demo/lib/elastic.js"></script>
@@ -33,58 +33,59 @@
                 .constant('euiHost', 'http://localhost:9200'); // ACTION: change to cluster address
     </script>
 </head>
-<body ng-app="tutorial" eui-index="'blog'"><!-- ACTION: change to index name -->
+<body ng-app="tutorial" eui-index="'shop'"><!-- ACTION: change to index name -->
 
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-xs-3 sidebar">
             <h3>Search</h3>
-            <eui-searchbox field="'body'"></eui-searchbox> <!-- ACTION: change to field to search on -->
+            <eui-searchbox field="'body_html'"></eui-searchbox>
+            <!-- ACTION: change to field to search on -->
             <h3>Single select facet</h3>
-            <eui-singleselect field="'body'" size="5"></eui-singleselect> <!-- ACTION: change to field to use as facet -->
+            <eui-singleselect field="'body_html'" size="5"></eui-singleselect>
+            <!-- ACTION: change to field to use as facet -->
             <h3>Multi select facet</h3>
-            <eui-checklist field="'title'" size="10"></eui-checklist> <!-- ACTION: change to field to use as facet -->
+            <eui-checklist field="'tags'" size="10"></eui-checklist>
+            <!-- ACTION: change to field to use as facet -->
         </div>
         <div class="col-xs-9 col-xs-offset-3 main">
-            <h1>Results</h1>
-            <ul>
-                <li ng-repeat="doc in indexVM.results.hits.hits">
-                    {{doc._source | json | limitTo: 500}} <!-- OPTIONAL: display more meaningful data instead of json -->
-                </li>
-            </ul>
-            <eui-simple-paging></eui-simple-paging>
+            <h3>Results</h3>
+            <!--<ul>-->
+                <!--<li ng-repeat="doc in indexVM.results.hits.hits">-->
+                    <!--{{doc._source | json | limitTo: 500}}-->
+                    <!--&lt;!&ndash; OPTIONAL: display more meaningful data instead of json &ndash;&gt;-->
+                <!--</li>-->
+            <!--</ul>-->
 
             <div class="row-fluid">
                 <div class="widget worange">
-                    <div data-cc-widget-header title="{{vm.title}}"
-                         subtitle="{{vm.sessions.length}}"></div>
                     <div class="widget-content user">
                         <div class="padd" ng-repeat="s in indexVM.results.hits.hits">
-                            <div class="user">
-                                <img data-cc-img-person="{{s.speaker.imageSource}}"
-                                     class="img-polaroid user-pic"/>
-                                <div class="user-details">
-                                    <small>{{s._source.user}}</small> at <small>{{s.room.name}}</small>
-                                    <small class="right hidden-phone">{{s.level}}</small>
-                                    <small class="right hidden-phone">{{s.track.name}}</small>
-                                    <small class="right hidden-phone">{{s.code}}</small>
-                                    <h3>{{s.title}}</h3>
-                                    <h6>{{s.speaker.fullName}}</h6>
-                                    <small class="text-subtle hidden-phone">{{s.tagsFormatted}}</small>
-                                </div>
+
+                            <h6>{{s._source.title}}</h6>
+                            <small>{{s._source.vendor}}</small>
+                            <small>{{s._source.tags}}</small>
+
+                            <div>
+                                <img style="height: 100px; width: 100px;" src="{{s._source.images[0].src}}"/>
+                                <small>{{s._source.body_html}}</small>
+
                             </div>
                         </div>
                     </div>
-                    <div class="widget-foot">
-                        <div class="clearfix"></div>
-                    </div>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
                 </div>
             </div>
+
+            <eui-simple-paging></eui-simple-paging>
         </div>
-
-
     </div>
+
+
+</div>
 </div>
 </body>
 </html>
