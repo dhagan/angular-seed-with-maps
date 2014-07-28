@@ -47,19 +47,6 @@
             <eui-checklist field="'title'" size="10"></eui-checklist> <!-- ACTION: change to field to use as facet -->
         </div>
         <div class="col-xs-9 col-xs-offset-3 main">
-            <div class="instructions panel panel-primary">
-                <!-- README -->
-                <div class="panel-heading">Getting started with the Demo</div>
-                <div class="panel-body">
-                    Instructions, modify this file according to the following:
-                    <ol>
-                        <li>Set the constant euiHost in &lt;head&gt; to point to your cluster</li>
-                        <li>Change eui-index on &lt;body&gt; tag to the name of your index</li>
-                        <li>Set the field attributes on the facets in the sidebar to meaningful fields of your data</li>
-                    </ol>
-                </div>
-            </div>
-
             <h1>Results</h1>
             <ul>
                 <li ng-repeat="doc in indexVM.results.hits.hits">
@@ -67,7 +54,36 @@
                 </li>
             </ul>
             <eui-simple-paging></eui-simple-paging>
+
+            <div class="row-fluid">
+                <div class="widget worange">
+                    <div data-cc-widget-header title="{{vm.title}}"
+                         subtitle="{{vm.sessions.length}}"></div>
+                    <div class="widget-content user">
+                        <div class="padd" ng-repeat="s in indexVM.results.hits.hits">
+                            <div class="user">
+                                <img data-cc-img-person="{{s.speaker.imageSource}}"
+                                     class="img-polaroid user-pic"/>
+                                <div class="user-details">
+                                    <small>{{s._source.user}}</small> at <small>{{s.room.name}}</small>
+                                    <small class="right hidden-phone">{{s.level}}</small>
+                                    <small class="right hidden-phone">{{s.track.name}}</small>
+                                    <small class="right hidden-phone">{{s.code}}</small>
+                                    <h3>{{s.title}}</h3>
+                                    <h6>{{s.speaker.fullName}}</h6>
+                                    <small class="text-subtle hidden-phone">{{s.tagsFormatted}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </div>
 </div>
 </body>
