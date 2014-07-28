@@ -35,16 +35,20 @@
 </head>
 <body ng-app="tutorial" eui-index="'shop'"><!-- ACTION: change to index name -->
 
-<div class="page-header">
-    <h1>What's in town</h1>
-</div>
+
 
 <div class="container-fluid">
-
+    <div class="page-header">
+        <h1>What's in town</h1>
+    </div>
     <div class="row">
-
-
-
+        <div class="span10 offset2">
+            <div class="page-header">
+                <h1>Hello World</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-3 sidebar">
             <h3>Search</h3>
             <eui-searchbox field="'body_html'"></eui-searchbox>
@@ -64,8 +68,6 @@
             <eui-simple-paging></eui-simple-paging>
         </div>
     </div>
-
-
 </div>
 </div>
 </body>

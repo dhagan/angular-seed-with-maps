@@ -1,22 +1,54 @@
 <div class="row-fluid">
-    <div class="widget worange">
-        <div class="widget-content user">
-            <div class="padd" ng-repeat="s in indexVM.results.hits.hits">
 
-                <h6>{{s._source.title}}</h6>
-                <small>{{s._source.vendor}}</small>
-                <small>{{s._source.tags}}</small>
+    <style>
+        .product {
+            border: solid;
+            border-width: 1px;
+            border-color: lightgrey;
+            margin: 5px;
+        }
+    </style>
 
-                <div>
-                    <img style="height: 100px; width: 100px;" src="{{s._source.images[0].src}}"/>
-                    <small><div ng-bind-html="s._source.body_html"></div></small>
 
-                </div>
+    <div class="row product" ng-repeat="s in indexVM.results.hits.hits">
+        <div class="col-sm-2 col-md-2">
+            <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
+                 src="{{s._source.images[0].src}}"/>
+        </div>
+        <div class="col-sm-3 col-md-3">
+            <h4>{{s._source.title}}</h4>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> in stock
+                </label>
+            </div>
+            <p>${{s._source.variants[0].price}}</p>
+        </div>
+        <div class="col-sm-5 col-md-5">
+            <small>
+                <div ng-bind-html-unsafe="s._source.body_html">{{s._source.body_html}}</div>
+            </small>
+            <div>
+                <label>Rating</label>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
             </div>
         </div>
-    </div>
-    <div class="widget-foot">
-        <div class="clearfix"></div>
+        <div class="col-sm-2 col-md-2">
+            <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
+                 src="{{s._source.images[0].src}}"/>
+
+            <div>
+                <label>Store rating</label>
+                <span class="glyphicon glyphicon-check"></span>
+                <span class="glyphicon glyphicon-check"></span>
+                <span class="glyphicon glyphicon-check-"></span>
+                <span class="glyphicon glyphicon-star-empty"></span>
+            </div>
+        </div>
     </div>
 </div>
 
