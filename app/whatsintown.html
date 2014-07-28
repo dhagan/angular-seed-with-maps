@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ElasticUI Demo</title>
+    <title>What's in Town</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
     <script src="http://code.angularjs.org/1.2.16/angular.js"></script>
     <script src="http://rawgit.com/YousefED/ElasticUI/master/examples/demo/lib/elasticsearch.angular.js"></script>
@@ -35,9 +35,16 @@
 </head>
 <body ng-app="tutorial" eui-index="'shop'"><!-- ACTION: change to index name -->
 
+<div class="page-header">
+    <h1>What's in town</h1>
+</div>
+
 <div class="container-fluid">
 
     <div class="row">
+
+
+
         <div class="col-xs-3 sidebar">
             <h3>Search</h3>
             <eui-searchbox field="'body_html'"></eui-searchbox>
@@ -51,34 +58,8 @@
         </div>
         <div class="col-xs-9 col-xs-offset-3 main">
             <h3>Results</h3>
-            <!--<ul>-->
-                <!--<li ng-repeat="doc in indexVM.results.hits.hits">-->
-                    <!--{{doc._source | json | limitTo: 500}}-->
-                    <!--&lt;!&ndash; OPTIONAL: display more meaningful data instead of json &ndash;&gt;-->
-                <!--</li>-->
-            <!--</ul>-->
 
-            <div class="row-fluid">
-                <div class="widget worange">
-                    <div class="widget-content user">
-                        <div class="padd" ng-repeat="s in indexVM.results.hits.hits">
-
-                            <h6>{{s._source.title}}</h6>
-                            <small>{{s._source.vendor}}</small>
-                            <small>{{s._source.tags}}</small>
-
-                            <div>
-                                <img style="height: 100px; width: 100px;" src="{{s._source.images[0].src}}"/>
-                                <small>{{s._source.body_html}}</small>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-foot">
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+            <div ng-include="'partials/products.html'"/>
 
             <eui-simple-paging></eui-simple-paging>
         </div>
