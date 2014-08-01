@@ -13,7 +13,7 @@
     <div class="row product" ng-repeat="s in indexVM.results.hits.hits">
         <div class="col-sm-2 col-md-2">
             <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
-                 src="{{s._source.images[0].src}}"/>
+                 ng-src="{{s._source.images[0].src}}"/>
         </div>
         <div class="col-sm-3 col-md-3">
             <h4>{{s._source.title}}</h4>
@@ -39,7 +39,7 @@
         </div>
         <div class="col-sm-2 col-md-2">
             <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
-                 src="{{s._source.images[0].src}}"/>
+                 ng-src="{{s._source.images[0].src}}"/>
 
             <div>
                 <label>Store rating</label>

@@ -1,0 +1,52 @@
+<xml_api_reply version="1">
+    <bookmarks>
+        <bookmark>
+            <title>Eiffel Tower</title>
+            <url>http://maps.google.com/?cid=10222232094831998944</url>
+            <timestamp>1403903969781001</timestamp>
+            <id>483218538038648455</id>
+        </bookmark>
+        <bookmark>
+            <title>Kimon Hotel</title>
+            <url>http://maps.google.com/?cid=9366987855218959530</url>
+            <timestamp>1399702363763001</timestamp>
+            <id>3789888480318397445</id>
+        </bookmark>
+        <bookmark>
+            <title>Locanda Ai Santi Apostoli</title>
+            <url>http://maps.google.com/?cid=2452133589534064173</url>
+            <timestamp>1399702350230001</timestamp>
+            <id>1579064484490604430</id>
+        </bookmark>
+        <bookmark>
+            <title>Hotel Giardino Verdi</title>
+            <url>http://maps.google.com/?cid=11418988417288629608</url>
+            <timestamp>1399702336528001</timestamp>
+            <id>14949016441384479833</id>
+        </bookmark>
+        <bookmark>
+            <title>Tenuta di Spannocchia</title>
+            <url>http://maps.google.com/?cid=14459555789651882082</url>
+            <timestamp>1399702324203001</timestamp>
+            <id>2202100635120775435</id>
+        </bookmark>
+        <bookmark>
+            <title>Via Castelfidardo, 26, 00185 Roma, Italy</title>
+            <url>http://maps.google.com/?q=Via Castelfidardo, 26, 00185 Roma, Italy</url>
+            <timestamp>1399537691114001</timestamp>
+            <id>17241951904939091432</id>
+        </bookmark>
+        <bookmark>
+            <title>Via Castelfidardo, 34</title>
+            <url>http://maps.google.com/?q=Via+Castelfidardo,+34</url>
+            <timestamp>1399536714716358</timestamp>
+            <id>17914162039032084807</id>
+        </bookmark>
+        <bookmark>
+            <title>Hotel Sunny Villas</title>
+            <url>http://maps.google.com/?cid=10134473280667590147</url>
+            <timestamp>1399536711137068</timestamp>
+            <id>14359713045337551532</id>
+        </bookmark>
+    </bookmarks>
+</xml_api_reply>
