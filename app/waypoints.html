@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+
+<li><a target="_blank" href="https://www.google.com/bookmarks/?output=xml">bookmarks</a></li>
+
+
+<script>
+
+    function parseXML(xmlStr) {
+        var parseXml;
+        if (typeof window.DOMParser != "undefined") {
+            parseXml = function (xmlStr) {
+                return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+            };
+        } else if (typeof window.ActiveXObject != "undefined" &&
+                new window.ActiveXObject("Microsoft.XMLDOM")) {
+            parseXml = function (xmlStr) {
+                var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+                xmlDoc.async = "false";
+                xmlDoc.loadXML(xmlStr);
+                return xmlDoc;
+            };
+        } else {
+            throw new Error("No XML parser found");
+        }
+        return parseXml(xmlStr);
+    }
+    function Ctrl($scope) {
+        $scope.text = 'guest';
+
+        $scope.save = function () {
+            console.log('save()');
+            var xml = parseXML($scope.bookmarkXML);
+            console.log(xml);
+
+        }
+    }
+</script>
+<form name="myForm" ng-controller="Ctrl">
+  <textarea ng-model="bookmarkXML" placeholder="Paste books xml from https://www.google.com/bookmarks/?output=xml" cols="30" rows="5"></textarea>
+  <span class="error" ng-show="myForm.input.$error.required">
+    Required!</span>
+  <span class="error" ng-show="myForm.input.$error.pattern">
+    Single word only!</span>
+
+    <tt>text = {{text}}</tt><br/>
+    <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
+    <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
+    <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+    <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+             <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid"
+                    class="btn btn-primary">Submit
+            </button>
+            <button ng-click="destroy()"
+                    ng-show="order._id" class="btn btn-danger">Delete
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+-->
+<script src="lib/angular/angular.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+</body>
+</html>
