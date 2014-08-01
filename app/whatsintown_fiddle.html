@@ -11,45 +11,59 @@
         }
     </style>
 </head>
-
-<div class="container">
+<body>
+<div class="container"  ng-init="collapse='232'">
     <div class="row product">
-        <div class="col-sm-2 col-md-2">
-            <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
-                 src="http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-002_larger_1350617201_large.png?v=1350616750"/>
-        </div>
-        <div class="col-sm-3 col-md-3">
-            <h4>Some wrench</h4>
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> in stock
-                </label>
+        <div class="row">
+            <div class="col-sm-2 col-md-2">
+                <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
+                     src="http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-002_larger_1350617201_large.png?v=1350616750"/>
             </div>
-            <p>$121.34</p>
+            <div class="col-sm-3 col-md-3">
+                <h4>Some wrench</h4>
+                <tt>value1 = {{collapse}}</tt><br/>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="collapse=!collapse"> in stock
+                    </label>
+                </div>
+                <p>$121.34</p>
+            </div>
+            <div class="col-sm-5 col-md-5">
+                <p>It's the small iPod with one very big idea: Video. Now the world's most popular music player,
+                    available</p>
+
+                <div>
+                    <label>Rating</label>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2">
+                <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
+                     src="http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-002_larger_1350617201_large.png?v=1350616750"/>
+
+                <div>
+                    <label>Store rating</label>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </div>
+            </div>
+
         </div>
-        <div class="col-sm-5 col-md-5">
+        <div class="col-sm-12 col-md-9 well">
             <p>It's the small iPod with one very big idea: Video. Now the world's most popular music player,
                 available</p>
-            <div>
-                <label>Rating</label>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-            </div>
         </div>
-        <div class="col-sm-2 col-md-2">
-            <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
-                 src="http://cdn.shopify.com/s/files/1/0063/3792/products/store_tshirt_T-002_larger_1350617201_large.png?v=1350616750"/>
-        </div>
-        <div>
-            <label>Store rating</label>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-        </div>
+        <button class="col-sm-12 col-md-9 well" ng-show="collapse" ng-click="collapse=!collapse">
+            <p>It's the small iPod with one very big idea: Video. Now the world's most popular music player,
+                available</p>
+        </button>
 
     </div>
 </div>
