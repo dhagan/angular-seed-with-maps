@@ -9,43 +9,52 @@
         }
     </style>
 
-
     <div class="row product" ng-repeat="s in indexVM.results.hits.hits">
-        <div class="col-sm-2 col-md-2">
-            <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
-                 ng-src="{{s._source.images[0].src}}"/>
-        </div>
-        <div class="col-sm-3 col-md-3">
-            <h4>{{s._source.title}}</h4>
+        <div class="row" ng-click="collapse=!collapse">
+            <div class="col-sm-2 col-md-2">
+                <img style="max-width: 100px; margin: 3px;" class="img-thumbnail"
+                     ng-src="{{s._source.images[0].src}}"/>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <h4>{{s._source.title}}</h4>
 
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> in stock
-                </label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> in stock
+                    </label>
+                </div>
+                <p>${{s._source.variants[0].price}}</p>
             </div>
-            <p>${{s._source.variants[0].price}}</p>
+            <div class="col-sm-5 col-md-5">
+                <small>
+                    <div ng-bind-html-unsafe="s._source.body_html">{{s._source.body_html}}</div>
+                </small>
+                <div>
+                    <label>Rating</label>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2">
+                <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
+                     ng-src="{{s._source.images[0].src}}"/>
+                <div>
+                    <label>Store rating</label>
+                    <span class="glyphicon glyphicon-check"></span>
+                    <span class="glyphicon glyphicon-check"></span>
+                    <span class="glyphicon glyphicon-unchecked"></span>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-5 col-md-5">
-            <small>
-                <div ng-bind-html-unsafe="s._source.body_html">{{s._source.body_html}}</div>
-            </small>
-            <div>
-                <label>Rating</label>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-            </div>
+        <div class="col-sm-12 col-md-9 well" ng-show="collapse">
+            <p>It's the small iPod with one very big idea: Video. Now the world's most popular music player,
+                available</p>
         </div>
-        <div class="col-sm-2 col-md-2">
-            <img style="max-width: 40px; margin: 3px;" class="img-thumbnail right"
-                 ng-src="{{s._source.images[0].src}}"/>
-            <div>
-                <label>Store rating</label>
-                <span class="glyphicon glyphicon-check"></span>
-                <span class="glyphicon glyphicon-check"></span>
-                <span class="glyphicon glyphicon-unchecked"></span>
-            </div>
+        <div class="col-sm-12 col-md-9 well" ng-show="collapse">
+            <p>It's the small iPod with one very big idea: Video. Now the world's most popular music player,
+                available</p>
         </div>
     </div>
 </div>
