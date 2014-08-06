@@ -1,0 +1,39 @@
+{"Category": "Kids' Footwear", "SizesAvailable": {}, "BrandDetailsUrl": "/api/1.0/brand/2900/", "Name": "MaxxDry RD Boot and Shoe Warmer-Dryer", "Url": "/api/1.0/product/2852w/", "Brand": {
+    "Url": "/api/1.0/brand/2900/",
+    "ProductsUrl": "/api/1.0/products/maxxdry~b~2900/",
+    "Id": "2900",
+    "LogoSrc": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer~b~2900~160x100.jpg"
+}, "WebUrl": "http://www.sierratradingpost.com/product/bounce/2852w/", "FinalPrice": 15.5, "AffiliateWebUrl": "http://www.sierratradingpost.com/product/bounce/2852w/", "Reviews": {
+    "ReviewsUrl": "/api/1.0/reviewsbyproduct/2852w/",
+    "ReviewCount": 34,
+    "AverageRating": 3.76
+}, "Colors": [
+    {
+        "ColorPreviewImageSrc": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer-in-see-photo~p~2852w_99~160.1.jpg",
+        "ColorChipImageSrc": "http://s.stpost.com/eccstorefront/colorchip/2852w-99.jpg",
+        "ColorCode": "99",
+        "ColorName": "See Photo"
+    }
+], "Skus": [
+    {
+        "BackOrdered": false,
+        "ColorCode": "99",
+        "FinalPrice": 15.5,
+        "Attributes": [
+            {
+                "Category": "COLOR",
+                "CategoryValue": "99",
+                "CategoryValueDescription": "SEE PHOTO"
+            }
+        ],
+        "QuantityAvailable": 20,
+        "Id": "2852W-99",
+        "ListPrice": 22.5
+    }
+], "DescriptionWords": ["closeouts", "wet", "footwear", "finally", "met", "match", "maxxdry", "rd", "boot", "shoe", "warmer", "dryer", "combo", "great", "hunters", "fishermen", "warms", "minutes", "dries", "hours", "portable", "quiet", "fast", "each", "boot", "dryer", "8\u00bex2\u00bcx1", "power", "cord", "62", "weight", "13", "oz", "pair", "material", "composite", "made", "china"], "SuggestedRetailPrice": 34.95, "Images": {
+    "PrimaryExtraLarge": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer-in-see-photo~p~2852w_99~600.1.jpg",
+    "PrimaryMedium": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer-in-see-photo~p~2852w_99~160.1.jpg",
+    "PrimarySmall": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer-in-see-photo~p~2852w_99~80.1.jpg",
+    "ExtraImages": null,
+    "PrimaryLarge": "http://i.stpost.com/maxxdry-rd-boot-and-shoe-warmer-dryer-in-see-photo~p~2852w_99~320.1.jpg"
+}, "DescriptionHtmlSimple": "<strong><a class=\"glossaryTermLink\" href=\"/closeouts~g~2312\" title=\"Closeouts: - Closeouts are items that may be last year's model or color. While closeout items are often offered at discounted prices, the products themselves are always high quality. Closeout items can include anything from shoes, underwear and apparel, to rugs, tents and outdoor equipment. Closeouts are often a high percentage off the retail price.\">Closeouts</a></strong>. Wet footwear has finally met its match in the MaxxDry RD boot and shoe warmer and dryer combo.\r\n<ul>\r\n<li>Great for hunters and fishermen</li>\r\n<li>Warms in minutes, dries in hours</li>\r\n<li>Portable, quiet and fast</li>\r\n<li><strong>Each boot dryer:</strong> 8-\u00bex2-\u00bcx1\"</li>\r\n<li><strong>Power cord:</strong> 62\"</li>\r\n<li><strong>Weight:</strong> 13 oz. pair</li>\r\n<li><strong>Material:</strong> Composite</li>\r\n<li>Made in China</li>\r\n</ul>", "DescriptionHtmlComplete": "<strong><a class=\"glossaryTermLink\" href=\"/closeouts~g~2312\" title=\"Closeouts: - Closeouts are items that may be last year's model or color. While closeout items are often offered at discounted prices, the products themselves are always high quality. Closeout items can include anything from shoes, underwear and apparel, to rugs, tents and outdoor equipment. Closeouts are often a high percentage off the retail price.\">Closeouts</a></strong>. Wet footwear has finally met its match in the MaxxDry RD boot and shoe warmer and dryer combo.\r\n<ul>\r\n<li>Great for hunters and fishermen</li>\r\n<li>Warms in minutes, dries in hours</li>\r\n<li>Portable, quiet and fast</li>\r\n<li><strong>Each boot dryer:</strong> 8-\u00bex2-\u00bcx1\"</li>\r\n<li><strong>Power cord:</strong> 62\"</li>\r\n<li><strong>Weight:</strong> 13 oz. pair</li>\r\n<li><strong>Material:</strong> Composite</li>\r\n<li>Made in China</li>\r\n</ul>", "Id": "2852W", "ListPrice": 22.5}

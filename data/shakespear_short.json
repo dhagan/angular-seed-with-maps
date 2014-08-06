@@ -1,0 +1,7 @@
+{"index":{"_index":"shakespeare","_type":"act","_id":0}}
+{"line_id":1,"play_name":"Henry IV","speech_number":"","line_number":"","speaker":"","text_entry":"ACT I"}
+{"index":{"_index":"shakespeare","_type":"scene","_id":1}}
+{"line_id":2,"play_name":"Henry IV","speech_number":"","line_number":"","speaker":"","text_entry":"SCENE I. London. The palace."}
+{"index":{"_index":"shakespeare","_type":"line","_id":2}}
+{"line_id":3,"play_name":"Henry IV","speech_number":"","line_number":"","speaker":"","text_entry":"Enter KING HENRY, LORD JOHN OF LANCASTER, the EARL of WESTMORELAND, SIR WALTER BLUNT, and others"}
+{"index":{"_index":"shakespeare","_type":"line","_id":3}}
